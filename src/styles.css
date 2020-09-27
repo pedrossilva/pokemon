@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --normal: #A8A77A;
+  --fire: #EE8130;
+  --water: #6390F0;
+  --electric: #F7D02C;
+  --grass: #7AC74C;
+  --ice: #96D9D6;
+  --fighting: #C22E28;
+  --poison: #A33EA1;
+  --ground: #E2BF65;
+  --flying: #A98FF3;
+  --psychic: #F95587;
+  --bug: #A6B91A;
+  --rock: #B6A136;
+  --ghost: #735797;
+  --dragon: #6F35FC;
+  --dark: #705746;
+  --steel: #B7B7CE;
+  --fairy: #D685AD;
+}
+.normal { color: var(--white); background-color: var(--normal) }
+.fire { color: var(--white); background-color: var(--fire) }
+.water { color: var(--white); background-color: var(--water) }
+.electric { color: var(--white); background-color: var(--electric) }
+.grass { color: var(--white); background-color: var(--grass) }
+.ice { color: var(--white); background-color: var(--ice) }
+.fighting { color: var(--white); background-color: var(--fighting) }
+.poison { color: var(--white); background-color: var(--poison) }
+.ground { color: var(--white); background-color: var(--ground) }
+.flying { color: var(--white); background-color: var(--flying) }
+.psychic { color: var(--white); background-color: var(--psychic) }
+.bug { color: var(--white); background-color: var(--bug) }
+.rock { color: var(--white); background-color: var(--rock) }
+.ghost { color: var(--white); background-color: var(--ghost) }
+.dragon { color: var(--white); background-color: var(--dragon) }
+.dark { color: var(--white); background-color: var(--dark) }
+.steel { color: var(--white); background-color: var(--steel) }
+.fairy { color: var(--white); background-color: var(--fairy) }
+
+.normal.light { background-color: var(--light); color: var(--normal) }
+.fire.light { background-color: var(--light); color: var(--fire) }
+.water.light { background-color: var(--light); color: var(--water) }
+.electric.light { background-color: var(--light); color: var(--electric) }
+.grass.light { background-color: var(--light); color: var(--grass) }
+.ice.light { background-color: var(--light); color: var(--ice) }
+.fighting.light { background-color: var(--light); color: var(--fighting) }
+.poison.light { background-color: var(--light); color: var(--poison) }
+.ground.light { background-color: var(--light); color: var(--ground) }
+.flying.light { background-color: var(--light); color: var(--flying) }
+.psychic.light { background-color: var(--light); color: var(--psychic) }
+.bug.light { background-color: var(--light); color: var(--bug) }
+.rock.light { background-color: var(--light); color: var(--rock) }
+.ghost.light { background-color: var(--light); color: var(--ghost) }
+.dragon.light { background-color: var(--light); color: var(--dragon) }
+.dark.light { background-color: var(--light); color: var(--dark) }
+.steel.light { background-color: var(--light); color: var(--steel) }
+.fairy.light { background-color: var(--light); color: var(--fairy) }

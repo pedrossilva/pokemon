@@ -8,7 +8,7 @@ import {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';
     <div class="card">
       <div class="card-body">
         <span class="ident">#{{data.id}}</span>
-        <div class="text-center">
+        <div class="text-center wrap-img">
             <img [src]="data.sprites.other.dream_world.front_default" alt="">
         </div>
         <h5 class="card-title mt-2">{{data.name | titlecase}}</h5>
@@ -16,10 +16,10 @@ import {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';
             <span class="badge badge-pill m-1" *ngFor="let item of data.types" [ngClass]="item.type.name">{{item.type.name | titlecase}}</span>
         </div>
         <div>
-          <span class="alert alert-secondary d-inline-block m-1">
+          <span class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faRulerVertical"></fa-icon>
             {{data.height / 10}}m</span>
-          <span class="alert alert-secondary d-inline-block m-1">
+          <span class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faWeight"></fa-icon>
             {{data.weight}} kg</span>
         </div>
@@ -28,11 +28,12 @@ import {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';
   `,
   styles: [`
     .card {
-      width: 18rem;
+      /*width: 18rem;*/
+      max-width: 30em;
       text-align: center;
     }
     .card img {
-      max-width: 60%;
+      max-width: 50%;
     }
     .ident {
       position: absolute;
@@ -41,6 +42,10 @@ import {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';
       line-height: 1em;
       opacity: 0.3;
       font-weight: bold;
+      text-shadow: 0px 0px 4px white;
+    }
+    .wrap-img {
+      min-height: 70px;
     }
   `]
 })

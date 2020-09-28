@@ -1,0 +1,5 @@
+.pokelist {
+  overflow: auto;
+  height: calc(100% - 80px);
+  background-color: var(--light);
+}

@@ -10,7 +10,8 @@ import {PokemonService} from '../../services/pokemon.service';
         <nav aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item"><button class="page-link" (click)="service.previous()" [disabled]="!pagination.previous">Previous</button></li>
-            <li *ngFor="let page of pages" class="page-item"><button class="page-link" (click)="service.page(page)" [disabled]="pagination.page === page">{{page}}</button></li>
+            <li *ngFor="let page of pages" class="page-item"><button class="page-link" (click)="service.page(page)"
+                [disabled]="pagination.page === page" [ngClass]="{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}">{{page}}</button></li>
             <li class="page-item"><button class="page-link" (click)="service.next()" [disabled]="!pagination.next">Next</button></li>
           </ul>
         </nav>

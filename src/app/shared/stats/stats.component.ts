@@ -4,7 +4,7 @@ import {StatInfo} from '../model/stat';
 @Component({
   selector: 'poke-stats',
   template: `
-    <div>
+    <div class="stats-bars">
       <div class="row mb-2" *ngFor="let item of stats">
         <div class="col-3 text-right label-val">
           <strong class="mr-4">{{item.stat.name | titlecase}}</strong>
@@ -21,6 +21,11 @@ import {StatInfo} from '../model/stat';
     }
     .label-val {
       min-width: 15em;
+      max-width: 15em;
+    }
+    .stats-bars {
+      max-width: 1600px;
+      margin: 0 auto;
     }
   `]
 })

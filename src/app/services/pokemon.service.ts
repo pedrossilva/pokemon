@@ -83,5 +83,15 @@ export class PokemonService {
     Object.assign(this._pagination, newPaginator);
     this.paginationSource.next(newPaginator);
   }
+
+  getTypes(): void {
+    this.http.get(`${environment.api}/type/`)
+      .pipe(mergeMap((response) => {
+        const {results} = response as any;
+        // this.setPagination({next, previous, count, url});
+        const observables = results.map(pokemon => this.http.get(pokemon.url));
+        return forkJoin(...observables).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
+      })).subscribe(data => console.log(data));
+  }
 }
 

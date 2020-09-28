@@ -2,15 +2,7 @@
   <div class="row h-100">
     <div class="col-1 types-menu"></div>
     <div class="col h-100 pr-0">
-      <div class="header"></div>
-      <div class="pokelist p-2">
-        <div *ngFor="let pokemon of pokemons" class="p-1">
-          <poke-row [data]="pokemon"></poke-row>
-        </div>
-      </div>
-      <div class="pagination">
-        <poke-paginator></poke-paginator>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

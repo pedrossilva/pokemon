@@ -1,23 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {PokemonService} from './services/pokemon.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'pokemon';
-  pokemons = [];
 
-  constructor(protected service: PokemonService) {
-  }
-
-  ngOnInit(): void {
-    this.service.updateList().subscribe();
-
-    this.service.pokemons.subscribe(pokemons => {
-      this.pokemons = pokemons;
-    });
+  constructor() {
   }
 }

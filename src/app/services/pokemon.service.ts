@@ -30,7 +30,8 @@ export class PokemonService {
 
   updateList(url = this.getUrl()): Observable<any> {
     return this.http.get(url)
-      .pipe(mergeMap(({next, previous, count, results}) => {
+      .pipe(mergeMap((response) => {
+        const {next, previous, count, results} = response as any;
         this.setPagination({next, previous, count, url});
         const observables = results.map(pokemon => this.http.get(pokemon.url));
         return forkJoin(...observables).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));

@@ -7,7 +7,7 @@ export interface Pokemon {
   order: number;
   sprites: Sprites;
   stats: StatInfo[];
-  types: TypeInfo[];
+  types: TypeSlot[];
   weight: number;
 }
 
@@ -32,12 +32,23 @@ export interface OtherSprites {
   front_female?: string;
 }
 
-export interface Type {
+export interface NameUrl {
   name: string;
   url: string;
 }
 
-export interface TypeInfo {
+export interface TypeSlot {
   slot: number;
-  type: Type;
+  type: NameUrl;
+}
+
+export interface PokemonSlot {
+  slot: number;
+  pokemon: NameUrl;
+}
+
+export interface Type {
+  id: number;
+  name: string;
+  pokemon: PokemonSlot[];
 }

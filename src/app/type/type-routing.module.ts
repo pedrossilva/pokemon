@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import {TypeComponent} from './type.component';
 
 const routes: Routes = [
-  { path: '', component: TypeComponent },
+  { path: ':type', component: TypeComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes)
+  ],
   exports: [RouterModule]
 })
 export class TypeRoutingModule { }

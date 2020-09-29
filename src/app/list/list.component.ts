@@ -5,7 +5,7 @@ import {PokemonService} from '../services/pokemon.service';
   selector: 'poke-list',
   template: `
     <div class="header"></div>
-    <div class="pokelist p-2">
+    <div class="pokelist">
       <div *ngFor="let pokemon of pokemons" class="p-1">
         <poke-row [data]="pokemon"></poke-row>
       </div>
@@ -15,17 +15,13 @@ import {PokemonService} from '../services/pokemon.service';
     </div>
   `,
   styles: [`
-    .pokelist {
-      overflow: auto;
-      height: calc(100% - 80px);
-      background-color: var(--light);
-    }
   `]
 })
 export class ListComponent implements OnInit {
   pokemons = [];
 
   constructor(protected service: PokemonService) {
+    service.type = null;
   }
 
   ngOnInit(): void {

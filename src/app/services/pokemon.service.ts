@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject, forkJoin, Observable} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
 import {Page, Pagination} from '../shared/model/pagination';
-import {Pokemon} from '../shared/model/pokemon';
+import {NameUrl, Pokemon, Type} from '../shared/model/pokemon';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,11 @@ export class PokemonService {
   private paginationSource = new BehaviorSubject<Pagination>({});
   pagination = this.paginationSource.asObservable();
 
+  private typesSource = new BehaviorSubject<Type[]>([]);
+  types = this.typesSource.asObservable();
+
+  type: string;
+
   constructor(private http: HttpClient) { }
 
   updateList(url = this.getUrl()): Observable<any> {
@@ -33,9 +38,13 @@ export class PokemonService {
       .pipe(mergeMap((response) => {
         const {next, previous, count, results} = response as any;
         this.setPagination({next, previous, count, url});
-        const observables = results.map(pokemon => this.http.get(pokemon.url));
-        return forkJoin(...observables).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
+        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
       }));
+  }
+
+  getList(list: NameUrl[]): Observable<any> {
+    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));
+    return forkJoin(...observables);
   }
 
   next(): void {
@@ -84,14 +93,15 @@ export class PokemonService {
     this.paginationSource.next(newPaginator);
   }
 
-  getTypes(): void {
+  getTypes(): Observable<any> {
     this.http.get(`${environment.api}/type/`)
       .pipe(mergeMap((response) => {
         const {results} = response as any;
-        // this.setPagination({next, previous, count, url});
-        const observables = results.map(pokemon => this.http.get(pokemon.url));
-        return forkJoin(...observables).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
+        const observables = results.map(type => this.http.get(type.url));
+        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));
       })).subscribe(data => console.log(data));
+
+    return this.types;
   }
 }
 

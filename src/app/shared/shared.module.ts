@@ -9,6 +9,8 @@ import {PaginatorComponent} from './paginator/paginator.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { TypesMenuComponent } from './types-menu/types-menu.component';
+import {RouterModule} from '@angular/router';
 
 
 
@@ -17,11 +19,13 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     FontAwesomeModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [
     RowComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TypesMenuComponent
   ],
   declarations: [
     CardComponent,
@@ -29,7 +33,8 @@ import {FormsModule} from '@angular/forms';
     StatsComponent,
     StatBarComponent,
     RowComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TypesMenuComponent
   ]
 })
 export class SharedModule { }

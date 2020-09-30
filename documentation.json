@@ -37,11 +37,147 @@
     ],
     "interfaces": [
         {
-            "name": "OtherSprites",
-            "id": "interface-OtherSprites-9537eeeb6eb6bd549aa312f3bae74888",
+            "name": "Iterator",
+            "id": "interface-Iterator-09259d61a6f2c4173c4311014bfd683b",
+            "file": "src/app/shared/model/iterator.ts",
+            "type": "interface",
+            "sourceCode": "export interface Iterator<T> {\n  next?(value?: any): IteratorResult<T>;\n  return?(value?: any): IteratorResult<T>;\n  throw?(e?: any): IteratorResult<T>;\n}\n\nexport interface IteratorResult<T> {\n  done: boolean;\n  value: T;\n}\n",
+            "properties": [],
+            "indexSignatures": [],
+            "kind": 152,
+            "methods": [
+                {
+                    "name": "next",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "optional": true
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "IteratorResult<T>",
+                    "typeParameters": [],
+                    "line": 2,
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "return",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "optional": true
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "IteratorResult<T>",
+                    "typeParameters": [],
+                    "line": 3,
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "throw",
+                    "args": [
+                        {
+                            "name": "e",
+                            "type": "any",
+                            "optional": true
+                        }
+                    ],
+                    "optional": true,
+                    "returnType": "IteratorResult<T>",
+                    "typeParameters": [],
+                    "line": 4,
+                    "jsdoctags": [
+                        {
+                            "name": "e",
+                            "type": "any",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "IteratorResult",
+            "id": "interface-IteratorResult-09259d61a6f2c4173c4311014bfd683b",
+            "file": "src/app/shared/model/iterator.ts",
+            "type": "interface",
+            "sourceCode": "export interface Iterator<T> {\n  next?(value?: any): IteratorResult<T>;\n  return?(value?: any): IteratorResult<T>;\n  throw?(e?: any): IteratorResult<T>;\n}\n\nexport interface IteratorResult<T> {\n  done: boolean;\n  value: T;\n}\n",
+            "properties": [
+                {
+                    "name": "done",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "NameUrl",
+            "id": "interface-NameUrl-c7a5ea2387fb8e481d6cff00eea80356",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeInfo[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface Type {\n  name: string;\n  url: string;\n}\n\nexport interface TypeInfo {\n  slot: number;\n  type: Type;\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "url",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 37
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "OtherSprites",
+            "id": "interface-OtherSprites-c7a5ea2387fb8e481d6cff00eea80356",
+            "file": "src/app/shared/model/pokemon.ts",
+            "type": "interface",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "front_default",
@@ -151,10 +287,10 @@
         },
         {
             "name": "Pokemon",
-            "id": "interface-Pokemon-9537eeeb6eb6bd549aa312f3bae74888",
+            "id": "interface-Pokemon-c7a5ea2387fb8e481d6cff00eea80356",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeInfo[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface Type {\n  name: string;\n  url: string;\n}\n\nexport interface TypeInfo {\n  slot: number;\n  type: Type;\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "height",
@@ -200,7 +336,7 @@
                 },
                 {
                     "name": "types",
-                    "type": "TypeInfo[]",
+                    "type": "TypeSlot[]",
                     "optional": false,
                     "description": "",
                     "line": 10
@@ -218,11 +354,37 @@
             "methods": []
         },
         {
-            "name": "Sprites",
-            "id": "interface-Sprites-9537eeeb6eb6bd549aa312f3bae74888",
+            "name": "PokemonSlot",
+            "id": "interface-PokemonSlot-c7a5ea2387fb8e481d6cff00eea80356",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeInfo[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface Type {\n  name: string;\n  url: string;\n}\n\nexport interface TypeInfo {\n  slot: number;\n  type: Type;\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "properties": [
+                {
+                    "name": "pokemon",
+                    "type": "NameUrl",
+                    "optional": false,
+                    "description": "",
+                    "line": 47
+                },
+                {
+                    "name": "slot",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 46
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "Sprites",
+            "id": "interface-Sprites-c7a5ea2387fb8e481d6cff00eea80356",
+            "file": "src/app/shared/model/pokemon.ts",
+            "type": "interface",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "back_default",
@@ -360,24 +522,31 @@
         },
         {
             "name": "Type",
-            "id": "interface-Type-9537eeeb6eb6bd549aa312f3bae74888",
+            "id": "interface-Type-c7a5ea2387fb8e481d6cff00eea80356",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeInfo[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface Type {\n  name: string;\n  url: string;\n}\n\nexport interface TypeInfo {\n  slot: number;\n  type: Type;\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
+                {
+                    "name": "id",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 51
+                },
                 {
                     "name": "name",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 52
                 },
                 {
-                    "name": "url",
-                    "type": "string",
+                    "name": "pokemon",
+                    "type": "PokemonSlot[]",
                     "optional": false,
                     "description": "",
-                    "line": 37
+                    "line": 53
                 }
             ],
             "indexSignatures": [],
@@ -385,11 +554,11 @@
             "methods": []
         },
         {
-            "name": "TypeInfo",
-            "id": "interface-TypeInfo-9537eeeb6eb6bd549aa312f3bae74888",
+            "name": "TypeSlot",
+            "id": "interface-TypeSlot-c7a5ea2387fb8e481d6cff00eea80356",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeInfo[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface Type {\n  name: string;\n  url: string;\n}\n\nexport interface TypeInfo {\n  slot: number;\n  type: Type;\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "slot",
@@ -400,7 +569,7 @@
                 },
                 {
                     "name": "type",
-                    "type": "Type",
+                    "type": "NameUrl",
                     "optional": false,
                     "description": "",
                     "line": 42
@@ -414,7 +583,7 @@
     "injectables": [
         {
             "name": "PokemonService",
-            "id": "injectable-PokemonService-2c6abebf257cb7e1c5719dfb2aa85263",
+            "id": "injectable-PokemonService-46f770755f481c51ade0a5c7f1f48b7c",
             "file": "src/app/services/pokemon.service.ts",
             "properties": [
                 {
@@ -465,6 +634,32 @@
                     "modifierKind": [
                         112
                     ]
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "types",
+                    "defaultValue": "this.typesSource.asObservable()",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                },
+                {
+                    "name": "typesSource",
+                    "defaultValue": "new BehaviorSubject<Type[]>([])",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "modifierKind": [
+                        112
+                    ]
                 }
             ],
             "methods": [
@@ -479,7 +674,7 @@
                     "optional": false,
                     "returnType": "literal type",
                     "typeParameters": [],
-                    "line": 63,
+                    "line": 72,
                     "jsdoctags": [
                         {
                             "name": "url",
@@ -489,6 +684,36 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "getList",
+                    "args": [
+                        {
+                            "name": "list",
+                            "type": "NameUrl[]"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<any>",
+                    "typeParameters": [],
+                    "line": 45,
+                    "jsdoctags": [
+                        {
+                            "name": "list",
+                            "type": "NameUrl[]",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getTypes",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Observable<any>",
+                    "typeParameters": [],
+                    "line": 96
                 },
                 {
                     "name": "getUrl",
@@ -502,7 +727,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 64,
                     "jsdoctags": [
                         {
                             "name": "pagination",
@@ -520,7 +745,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 41
+                    "line": 50
                 },
                 {
                     "name": "page",
@@ -533,7 +758,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 49,
+                    "line": 58,
                     "jsdoctags": [
                         {
                             "name": "page",
@@ -550,7 +775,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 45
+                    "line": 54
                 },
                 {
                     "name": "setPagination",
@@ -563,7 +788,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 73,
+                    "line": 82,
                     "jsdoctags": [
                         {
                             "name": "pagination",
@@ -586,7 +811,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 31,
+                    "line": 36,
                     "jsdoctags": [
                         {
                             "name": "url",
@@ -600,7 +825,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Page, Pagination} from '../shared/model/pagination';\nimport {Pokemon} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  private pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        const observables = results.map(pokemon => this.http.get(pokemon.url));\n        return forkJoin(...observables).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n}\n\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Page, Pagination} from '../shared/model/pagination';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  private pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  private typesSource = new BehaviorSubject<Type[]>([]);\n  types = this.typesSource.asObservable();\n\n  type: string;\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  getList(list: NameUrl[]): Observable<any> {\n    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));\n    return forkJoin(...observables);\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n\n  getTypes(): Observable<any> {\n    this.http.get(`${environment.api}/type/`)\n      .pipe(mergeMap((response) => {\n        const {results} = response as any;\n        const observables = results.map(type => this.http.get(type.url));\n        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));\n      })).subscribe(data => console.log(data));\n\n    return this.types;\n  }\n}\n\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -610,7 +835,7 @@
                         "type": "HttpClient"
                     }
                 ],
-                "line": 27,
+                "line": 32,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -657,6 +882,87 @@
             "hostListeners": []
         },
         {
+            "name": "Page",
+            "id": "class-Page-420c1ade73002474520c7406524b75ab",
+            "file": "src/app/type/type.component.ts",
+            "type": "class",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\nimport {Iterator} from '../shared/model/iterator';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n        <poke-row [data]=\"pokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: Pokemon[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "items",
+                        "type": "NameUrl[]"
+                    }
+                ],
+                "line": 88,
+                "jsdoctags": [
+                    {
+                        "name": "items",
+                        "type": "NameUrl[]",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "items",
+                    "type": "NameUrl[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 90,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "offset",
+                    "defaultValue": "10",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 88,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "pointer",
+                    "defaultValue": "0",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 87,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "description": "<p>Page iterator return 10 items for step</p>\n",
+            "rawdescription": "Page iterator return 10 items for step",
+            "methods": [
+                {
+                    "name": "next",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "IteratorResult<NameUrl[]>",
+                    "typeParameters": [],
+                    "line": 93,
+                    "modifierKind": [
+                        114
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        },
+        {
             "name": "Settings",
             "id": "class-Settings-40ba1415c19fb1e2b15d329f127f1952",
             "file": "src/app/settings.ts",
@@ -687,7 +993,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-26cee101a73a075b9c99518f645866ce",
+            "id": "component-AppComponent-5530f7e967f1b1c2e1b5fc17e7ade54d",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -707,42 +1013,25 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "pokemons",
-                    "defaultValue": "[]",
-                    "type": "[]",
-                    "optional": false,
-                    "description": "",
-                    "line": 11
-                },
-                {
                     "name": "title",
                     "defaultValue": "'pokemon'",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 9
                 }
             ],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 16
-                }
-            ],
+            "methodsClass": [],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, OnInit} from '@angular/core';\nimport {PokemonService} from './services/pokemon.service';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.css']\n})\nexport class AppComponent implements OnInit {\n  title = 'pokemon';\n  pokemons = [];\n\n  constructor(protected service: PokemonService) {\n  }\n\n  ngOnInit(): void {\n    this.service.updateList().subscribe();\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n  }\n}\n",
+            "sourceCode": "import {Component} from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.css']\n})\nexport class AppComponent {\n  title = 'pokemon';\n\n  constructor() {\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".pokelist {\n  overflow: auto;\n  height: calc(100% - 80px);\n  background-color: var(--light);\n}\n",
+                    "data": ".types-menu {\n  min-width: 80px;\n  max-width: 180px;\n}\n",
                     "styleUrl": "./app.component.css"
                 }
             ],
@@ -750,27 +1039,10 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [
-                    {
-                        "name": "service",
-                        "type": "PokemonService"
-                    }
-                ],
-                "line": 11,
-                "jsdoctags": [
-                    {
-                        "name": "service",
-                        "type": "PokemonService",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
+                "args": [],
+                "line": 9
             },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"container-fluid h-100\">\n  <div class=\"row h-100\">\n    <div class=\"col-1 types-menu\"></div>\n    <div class=\"col h-100 pr-0\">\n      <div class=\"header\"></div>\n      <div class=\"pokelist p-2\">\n        <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n          <poke-row [data]=\"pokemon\"></poke-row>\n        </div>\n      </div>\n      <div class=\"pagination\">\n        <poke-paginator></poke-paginator>\n      </div>\n    </div>\n  </div>\n</div>\n"
+            "templateData": "<div class=\"container-fluid h-100\">\n  <div class=\"row h-100\">\n    <div class=\"col-3 types-menu h-100 pr-0\">\n      <poke-types-menu></poke-types-menu>\n    </div>\n    <div class=\"col h-100 pr-0\">\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "CardComponent",
@@ -856,8 +1128,88 @@
             ]
         },
         {
+            "name": "ListComponent",
+            "id": "component-ListComponent-3fea9f6b0c49c52805a0d123e9ef2288",
+            "file": "src/app/list/list.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "poke-list",
+            "styleUrls": [],
+            "styles": [
+                "\n  "
+            ],
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n  <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n    <poke-row [data]=\"pokemon\" [grid]=\"grid\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination\">\n  <poke-paginator></poke-paginator>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "grid",
+                    "defaultValue": "false",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "pokemons",
+                    "defaultValue": "[]",
+                    "type": "[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 28
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../services/pokemon.service';\n\n@Component({\n  selector: 'poke-list',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n        <poke-row [data]=\"pokemon\" [grid]=\"grid\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination\">\n      <poke-paginator></poke-paginator>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class ListComponent implements OnInit {\n  pokemons = [];\n  grid = false;\n\n  constructor(protected service: PokemonService) {\n    service.type = null;\n  }\n\n  ngOnInit(): void {\n    this.service.updateList().subscribe();\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "\n  \n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "service",
+                        "type": "PokemonService"
+                    }
+                ],
+                "line": 22,
+                "jsdoctags": [
+                    {
+                        "name": "service",
+                        "type": "PokemonService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ]
+        },
+        {
             "name": "PaginatorComponent",
-            "id": "component-PaginatorComponent-cbd2b5b38ab8a5f3fb58dbd6a09eef3a",
+            "id": "component-PaginatorComponent-abb006c4c5eac450f59b529613c099c3",
             "file": "src/app/shared/paginator/paginator.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -869,7 +1221,7 @@
             "styles": [
                 "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  "
             ],
-            "template": "<div class=\"row\">\n  <div class=\"col\">\n    <nav aria-label=\"Page navigation example\">\n      <ul class=\"pagination\">\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n        <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\" [disabled]=\"pagination.page === page\">{{page}}</button></li>\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n      </ul>\n    </nav>\n  </div>\n\n  <div class=\"m-2 col\">\n    <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n      <option value=\"10\">10</option>\n      <option value=\"20\">20</option>\n      <option value=\"30\">30</option>\n    </select>\n  </div>\n</div>\n",
+            "template": "<div class=\"row\">\n  <div class=\"col\">\n    <nav aria-label=\"Page navigation example\">\n      <ul class=\"pagination\">\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n        <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n            [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n      </ul>\n    </nav>\n  </div>\n\n  <div class=\"m-2 col\">\n    <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n      <option value=\"10\">10</option>\n      <option value=\"20\">20</option>\n      <option value=\"30\">30</option>\n    </select>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -880,7 +1232,7 @@
                     "type": "Pagination",
                     "optional": false,
                     "description": "",
-                    "line": 54,
+                    "line": 55,
                     "modifierKind": [
                         112
                     ]
@@ -891,14 +1243,14 @@
                     "type": "(number | string)[]",
                     "optional": false,
                     "description": "",
-                    "line": 53
+                    "line": 54
                 },
                 {
                     "name": "service",
                     "type": "PokemonService",
                     "optional": false,
                     "description": "",
-                    "line": 74,
+                    "line": 75,
                     "modifierKind": [
                         114
                     ]
@@ -911,7 +1263,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 76
+                    "line": 77
                 }
             ],
             "hostBindings": [],
@@ -919,7 +1271,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pagination} from '../model/pagination';\nimport {PokemonService} from '../../services/pokemon.service';\n\n@Component({\n  selector: 'poke-paginator',\n  template: `\n    <div class=\"row\">\n      <div class=\"col\">\n        <nav aria-label=\"Page navigation example\">\n          <ul class=\"pagination\">\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n            <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\" [disabled]=\"pagination.page === page\">{{page}}</button></li>\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n          </ul>\n        </nav>\n      </div>\n\n      <div class=\"m-2 col\">\n        <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n          <option value=\"10\">10</option>\n          <option value=\"20\">20</option>\n          <option value=\"30\">30</option>\n        </select>\n      </div>\n    </div>\n  `,\n  styles: [`\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  `]\n})\nexport class PaginatorComponent implements OnInit {\n  get limit(): number {\n    return this.pagination.limit;\n  }\n  set limit(limit: number) {\n    this.service.setPagination({offset: limit, limit, page: 1});\n    this.service.page(1);\n  }\n\n  pages: (number | string)[] = [];\n  private _pagination: Pagination;\n  get pagination(): Pagination {\n    return this._pagination;\n  }\n\n  set pagination(pagination: Pagination) {\n    this._pagination = pagination;\n    const { count, limit, page } = pagination;\n    if(!count) return;\n    const numPages = Math.ceil(count / limit);\n    const show = [-page + 1, '...', -2, -1, 0, 1, 2, '...', numPages - page];\n    if(page < 4) show.splice(0, 2);\n    if(page > numPages - 4) show.splice(-2);\n\n    const showPages = show.map(n => (page + +n) || n)\n      .filter(v => v === '...' || v > 0 && v <= numPages);\n\n    this.pages = showPages;\n  }\n\n  constructor(public service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.service.pagination.subscribe(pagination => (this.pagination = pagination));\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pagination} from '../model/pagination';\nimport {PokemonService} from '../../services/pokemon.service';\n\n@Component({\n  selector: 'poke-paginator',\n  template: `\n    <div class=\"row\">\n      <div class=\"col\">\n        <nav aria-label=\"Page navigation example\">\n          <ul class=\"pagination\">\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n            <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n                [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n          </ul>\n        </nav>\n      </div>\n\n      <div class=\"m-2 col\">\n        <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n          <option value=\"10\">10</option>\n          <option value=\"20\">20</option>\n          <option value=\"30\">30</option>\n        </select>\n      </div>\n    </div>\n  `,\n  styles: [`\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  `]\n})\nexport class PaginatorComponent implements OnInit {\n  get limit(): number {\n    return this.pagination.limit;\n  }\n  set limit(limit: number) {\n    this.service.setPagination({offset: limit, limit, page: 1});\n    this.service.page(1);\n  }\n\n  pages: (number | string)[] = [];\n  private _pagination: Pagination;\n  get pagination(): Pagination {\n    return this._pagination;\n  }\n\n  set pagination(pagination: Pagination) {\n    this._pagination = pagination;\n    const { count, limit, page } = pagination;\n    if(!count) return;\n    const numPages = Math.ceil(count / limit);\n    const show = [-page + 1, '...', -2, -1, 0, 1, 2, '...', numPages - page];\n    if(page < 4) show.splice(0, 2);\n    if(page > numPages - 4) show.splice(-2);\n\n    const showPages = show.map(n => (page + +n) || n)\n      .filter(v => v === '...' || v > 0 && v <= numPages);\n\n    this.pages = showPages;\n  }\n\n  constructor(public service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.service.pagination.subscribe(pagination => (this.pagination = pagination));\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  \n",
@@ -932,7 +1284,7 @@
                         "type": "PokemonService"
                     }
                 ],
-                "line": 72,
+                "line": 73,
                 "jsdoctags": [
                     {
                         "name": "service",
@@ -959,7 +1311,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 48,
+                        "line": 49,
                         "jsdoctags": [
                             {
                                 "name": "limit",
@@ -974,7 +1326,7 @@
                         "name": "limit",
                         "type": "number",
                         "returnType": "number",
-                        "line": 45
+                        "line": 46
                     }
                 },
                 "pagination": {
@@ -989,7 +1341,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 59,
+                        "line": 60,
                         "jsdoctags": [
                             {
                                 "name": "pagination",
@@ -1004,14 +1356,14 @@
                         "name": "pagination",
                         "type": "",
                         "returnType": "Pagination",
-                        "line": 55
+                        "line": 56
                     }
                 }
             }
         },
         {
             "name": "RowComponent",
-            "id": "component-RowComponent-81a49c853551cb39fda83a40eba970c8",
+            "id": "component-RowComponent-13d34370c5ba854e3aa721f7d9dcd59b",
             "file": "src/app/shared/row/row.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1021,16 +1373,21 @@
             "selector": "poke-row",
             "styleUrls": [],
             "styles": [
-                "\n  "
+                "\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  "
             ],
-            "template": "<div class=\"row align-items-center p-1\">\n  <div class=\"col-4\">\n    <poke-card [data]=\"data\"></poke-card>\n  </div>\n  <div class=\"col\">\n    <poke-stats [stats]=\"data.stats\"></poke-stats>\n  </div>\n</div>\n",
+            "template": "<div class=\"row align-items-center p-1\">\n  <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n    <poke-card [data]=\"data\"></poke-card>\n  </div>\n  <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n    <poke-stats [stats]=\"data.stats\"></poke-stats>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
                     "name": "data",
-                    "line": 21,
+                    "line": 25,
                     "type": "Pokemon"
+                },
+                {
+                    "name": "grid",
+                    "defaultValue": "false",
+                    "line": 26
                 }
             ],
             "outputsClass": [],
@@ -1042,7 +1399,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25
+                    "line": 30
                 }
             ],
             "hostBindings": [],
@@ -1050,15 +1407,15 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-row',\n  template: `\n    <div class=\"row align-items-center p-1\">\n      <div class=\"col-4\">\n        <poke-card [data]=\"data\"></poke-card>\n      </div>\n      <div class=\"col\">\n        <poke-stats [stats]=\"data.stats\"></poke-stats>\n      </div>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class RowComponent implements OnInit {\n\n  @Input() data: Pokemon;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-row',\n  template: `\n    <div class=\"row align-items-center p-1\">\n      <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n        <poke-card [data]=\"data\"></poke-card>\n      </div>\n      <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n        <poke-stats [stats]=\"data.stats\"></poke-stats>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class RowComponent implements OnInit {\n\n  @Input() data: Pokemon;\n  @Input() grid = false;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n  \n",
+            "stylesData": "\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 21
+                "line": 26
             },
             "implements": [
                 "OnInit"
@@ -1274,7 +1631,7 @@
         },
         {
             "name": "StatsComponent",
-            "id": "component-StatsComponent-1d1e31a6519691a3651917228d70f32e",
+            "id": "component-StatsComponent-8963c767abb25ee09346f5c6fe75af9d",
             "file": "src/app/shared/stats/stats.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1284,15 +1641,15 @@
             "selector": "poke-stats",
             "styleUrls": [],
             "styles": [
-                "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n    }\n  "
+                "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  "
             ],
-            "template": "<div>\n  <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n    <div class=\"col-3 text-right label-val\">\n      <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n      <span class=\"val\">{{item.base_stat}}</span>\n    </div>\n    <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n  </div>\n</div>\n",
+            "template": "<div class=\"stats-bars\">\n  <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n    <div class=\"col-3 text-right label-val\">\n      <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n      <span class=\"val\">{{item.base_stat}}</span>\n    </div>\n    <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
                     "name": "stats",
-                    "line": 30,
+                    "line": 35,
                     "type": "StatInfo[]"
                 }
             ],
@@ -1305,7 +1662,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 34
+                    "line": 39
                 }
             ],
             "hostBindings": [],
@@ -1313,15 +1670,242 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {StatInfo} from '../model/stat';\n\n@Component({\n  selector: 'poke-stats',\n  template: `\n    <div>\n      <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n        <div class=\"col-3 text-right label-val\">\n          <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n          <span class=\"val\">{{item.base_stat}}</span>\n        </div>\n        <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n    }\n  `]\n})\nexport class StatsComponent implements OnInit {\n\n  @Input()\n  stats: StatInfo[];\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {StatInfo} from '../model/stat';\n\n@Component({\n  selector: 'poke-stats',\n  template: `\n    <div class=\"stats-bars\">\n      <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n        <div class=\"col-3 text-right label-val\">\n          <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n          <span class=\"val\">{{item.base_stat}}</span>\n        </div>\n        <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class StatsComponent implements OnInit {\n\n  @Input()\n  stats: StatInfo[];\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n    }\n  \n",
+            "stylesData": "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 30
+                "line": 35
+            },
+            "implements": [
+                "OnInit"
+            ]
+        },
+        {
+            "name": "TypeComponent",
+            "id": "component-TypeComponent-420c1ade73002474520c7406524b75ab",
+            "file": "src/app/type/type.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "poke-type",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\">\n  <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n    <poke-row [data]=\"pokemon\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination text-center\">\n  <div class=\"m-auto\">\n    <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n    <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n  </div>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "page",
+                    "type": "Page",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                },
+                {
+                    "name": "pokemons",
+                    "defaultValue": "[]",
+                    "type": "Pokemon[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 29
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 27
+                },
+                {
+                    "name": "types",
+                    "type": "Type[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 28
+                },
+                {
+                    "name": "typeSelected",
+                    "type": "Type",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "getList",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Pokemon[]",
+                    "typeParameters": [],
+                    "line": 59,
+                    "description": "<p>Get type by name and define list with first 10 items</p>\n"
+                },
+                {
+                    "name": "next",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 73,
+                    "description": "<p>Load +10 items on click in &quot;Learn More...&quot;</p>\n"
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 35
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\nimport {Iterator} from '../shared/model/iterator';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n        <poke-row [data]=\"pokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: Pokemon[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "activatedRoute",
+                        "type": "ActivatedRoute"
+                    },
+                    {
+                        "name": "service",
+                        "type": "PokemonService"
+                    }
+                ],
+                "line": 31,
+                "jsdoctags": [
+                    {
+                        "name": "activatedRoute",
+                        "type": "ActivatedRoute",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "service",
+                        "type": "PokemonService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ]
+        },
+        {
+            "name": "TypesMenuComponent",
+            "id": "component-TypesMenuComponent-ce79e579ed207f67f069b6de60c43f8c",
+            "file": "src/app/shared/types-menu/types-menu.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "poke-types-menu",
+            "styleUrls": [],
+            "styles": [
+                "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  "
+            ],
+            "template": "<div class=\"header\"></div>\n<ul>\n  <li [ngClass]=\"{'selected': service.type === null}\">\n    <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n      <span class=\"circle dark\"></span>\n      <span class=\"label\">All</span>\n    </a>\n  </li>\n  <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n    <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n      <span class=\"circle\" [ngClass]=\"type.name\"></span>\n      <span class=\"label\">{{type.name | titlecase}}</span>\n    </a>\n  </li>\n</ul>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "service",
+                    "type": "PokemonService",
+                    "optional": false,
+                    "description": "",
+                    "line": 74,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "typeByName",
+                    "defaultValue": "{}",
+                    "type": "literal type",
+                    "optional": false,
+                    "description": "",
+                    "line": 72
+                },
+                {
+                    "name": "types",
+                    "type": "Type[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 71
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 76
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../../services/pokemon.service';\nimport {Type} from '../model/pokemon';\nimport {ActivatedRoute} from '@angular/router';\n\n@Component({\n  selector: 'poke-types-menu',\n  template: `\n    <div class=\"header\"></div>\n    <ul>\n      <li [ngClass]=\"{'selected': service.type === null}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n          <span class=\"circle dark\"></span>\n          <span class=\"label\">All</span>\n        </a>\n      </li>\n      <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n          <span class=\"circle\" [ngClass]=\"type.name\"></span>\n          <span class=\"label\">{{type.name | titlecase}}</span>\n        </a>\n      </li>\n    </ul>\n  `,\n  styles: [`\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  `]\n})\nexport class TypesMenuComponent implements OnInit {\n  types: Type[];\n  typeByName: {[key: string]: Type} = {};\n\n  constructor(public service: PokemonService, private activatedRoute: ActivatedRoute) { }\n\n  ngOnInit(): void {\n    this.service.getTypes().subscribe(types => {\n      this.types = types;\n      this.types.forEach(type => this.typeByName[type.name] = type);\n    });\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  \n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "service",
+                        "type": "PokemonService"
+                    },
+                    {
+                        "name": "activatedRoute",
+                        "type": "ActivatedRoute"
+                    }
+                ],
+                "line": 72,
+                "jsdoctags": [
+                    {
+                        "name": "service",
+                        "type": "PokemonService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "activatedRoute",
+                        "type": "ActivatedRoute",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "implements": [
                 "OnInit"
@@ -1341,7 +1925,150 @@
                     "elements": [
                         {
                             "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppRoutingModule"
                         },
+                        {
+                            "name": "SharedModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ListModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ListComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "ListRoutingModule"
+                        },
+                        {
+                            "name": "SharedModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ListComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ListRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "SharedModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
                         {
                             "name": "CardComponent"
                         },
@@ -1359,8 +2086,94 @@
                         },
                         {
                             "name": "TypeColorPipe"
+                        },
+                        {
+                            "name": "TypesMenuComponent"
                         }
                     ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "PaginatorComponent"
+                        },
+                        {
+                            "name": "RowComponent"
+                        },
+                        {
+                            "name": "TypesMenuComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "TypeModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "TypeComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "SharedModule"
+                        },
+                        {
+                            "name": "TypeRoutingModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "TypeComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "TypeRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
                 },
                 {
                     "type": "imports",
@@ -1372,11 +2185,7 @@
                 },
                 {
                     "type": "bootstrap",
-                    "elements": [
-                        {
-                            "name": "AppComponent"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "classes",
@@ -1601,9 +2410,76 @@
         "groupedEnumerations": {},
         "groupedTypeAliases": {}
     },
-    "routes": [],
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "className": "AppModule",
+        "children": [
+            {
+                "name": "routes",
+                "filename": "src/app/app-routing.module.ts",
+                "module": "AppRoutingModule",
+                "children": [
+                    {
+                        "path": "list",
+                        "loadChildren": "./list/list.module#ListModule",
+                        "children": [
+                            {
+                                "kind": "module",
+                                "children": [
+                                    {
+                                        "name": "routes",
+                                        "filename": "src/app/list/list-routing.module.ts",
+                                        "module": "ListRoutingModule",
+                                        "children": [
+                                            {
+                                                "path": "",
+                                                "component": "ListComponent"
+                                            }
+                                        ],
+                                        "kind": "module"
+                                    }
+                                ],
+                                "module": "ListModule"
+                            }
+                        ]
+                    },
+                    {
+                        "path": "type",
+                        "loadChildren": "./type/type.module#TypeModule",
+                        "children": [
+                            {
+                                "kind": "module",
+                                "children": [
+                                    {
+                                        "name": "routes",
+                                        "filename": "src/app/type/type-routing.module.ts",
+                                        "module": "TypeRoutingModule",
+                                        "children": [
+                                            {
+                                                "path": ":type",
+                                                "component": "TypeComponent"
+                                            }
+                                        ],
+                                        "kind": "module"
+                                    }
+                                ],
+                                "module": "TypeModule"
+                            }
+                        ]
+                    },
+                    {
+                        "path": "",
+                        "redirectTo": "/list",
+                        "pathMatch": "full"
+                    }
+                ],
+                "kind": "module"
+            }
+        ]
+    },
     "coverage": {
-        "count": 0,
+        "count": 1,
         "status": "low",
         "files": [
             {
@@ -1621,6 +2497,15 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/list/list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ListComponent",
+                "coveragePercent": 0,
                 "coverageCount": "0/5",
                 "status": "low"
             },
@@ -1630,7 +2515,7 @@
                 "linktype": "injectable",
                 "name": "PokemonService",
                 "coveragePercent": 0,
-                "coverageCount": "0/14",
+                "coverageCount": "0/19",
                 "status": "low"
             },
             {
@@ -1649,6 +2534,24 @@
                 "name": "CardComponent",
                 "coveragePercent": 12,
                 "coverageCount": "1/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/iterator.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Iterator",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/iterator.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IteratorResult",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -1673,6 +2576,15 @@
                 "filePath": "src/app/shared/model/pokemon.ts",
                 "type": "interface",
                 "linktype": "interface",
+                "name": "NameUrl",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/pokemon.ts",
+                "type": "interface",
+                "linktype": "interface",
                 "name": "OtherSprites",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
@@ -1691,6 +2603,15 @@
                 "filePath": "src/app/shared/model/pokemon.ts",
                 "type": "interface",
                 "linktype": "interface",
+                "name": "PokemonSlot",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/pokemon.ts",
+                "type": "interface",
+                "linktype": "interface",
                 "name": "Sprites",
                 "coveragePercent": 0,
                 "coverageCount": "0/11",
@@ -1702,14 +2623,14 @@
                 "linktype": "interface",
                 "name": "Type",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {
                 "filePath": "src/app/shared/model/pokemon.ts",
                 "type": "interface",
                 "linktype": "interface",
-                "name": "TypeInfo",
+                "name": "TypeSlot",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
                 "status": "low"
@@ -1756,7 +2677,7 @@
                 "linktype": "component",
                 "name": "RowComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
@@ -1775,6 +2696,33 @@
                 "name": "StatsComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/types-menu/types-menu.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TypesMenuComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/type/type.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TypeComponent",
+                "coveragePercent": 20,
+                "coverageCount": "2/10",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/type/type.component.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "Page",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
                 "status": "low"
             },
             {

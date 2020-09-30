@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { TypesMenuComponent } from './types-menu/types-menu.component';
 import {RouterModule} from '@angular/router';
+import { ToPokemonPipe } from './pipe/to-pokemon.pipe';
 
 
 
@@ -25,7 +26,8 @@ import {RouterModule} from '@angular/router';
   exports: [
     RowComponent,
     PaginatorComponent,
-    TypesMenuComponent
+    TypesMenuComponent,
+    ToPokemonPipe
   ],
   declarations: [
     CardComponent,
@@ -34,7 +36,8 @@ import {RouterModule} from '@angular/router';
     StatBarComponent,
     RowComponent,
     PaginatorComponent,
-    TypesMenuComponent
+    TypesMenuComponent,
+    ToPokemonPipe
   ]
 })
 export class SharedModule { }

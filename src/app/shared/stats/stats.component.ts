@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StatInfo} from '../model/stat';
+import {Stat} from '../model/pokemon';
 
 @Component({
   selector: 'poke-stats',
   template: `
     <div class="stats-bars">
-      <div class="row mb-2" *ngFor="let item of stats">
+      <div class="row mb-2" *ngFor="let stat of stats">
         <div class="col-3 text-right label-val">
-          <strong class="mr-4">{{item.stat.name | titlecase}}</strong>
-          <span class="val">{{item.base_stat}}</span>
+          <strong class="mr-4">{{stat.name | titlecase}}</strong>
+          <span class="val">{{stat.value}}</span>
         </div>
-        <div class="col"><poke-stat-bar [value]="item.base_stat"></poke-stat-bar></div>
+        <div class="col"><poke-stat-bar [value]="stat.value"></poke-stat-bar></div>
       </div>
     </div>
   `,
@@ -32,7 +32,7 @@ import {StatInfo} from '../model/stat';
 export class StatsComponent implements OnInit {
 
   @Input()
-  stats: StatInfo[];
+  stats: Stat[];
 
   constructor() { }
 

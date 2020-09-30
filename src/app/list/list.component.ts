@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {PokemonService} from '../services/pokemon.service';
+import {PokemonData} from '../shared/model/pokemon';
 
 @Component({
   selector: 'poke-list',
   template: `
     <div class="header"></div>
-    <div class="pokelist">
-      <div *ngFor="let pokemon of pokemons" class="p-1">
-        <poke-row [data]="pokemon"></poke-row>
+    <div class="pokelist" [ngClass]="{'row': grid}">
+      <div *ngFor="let pokemonData of pokemons" class="p-1" [ngClass]="{'col-md-6 col-lg-4 col-xl-3': grid}">
+        <poke-row [pokemon]="pokemonData | toPokemon" [grid]="grid"></poke-row>
       </div>
     </div>
     <div class="pagination">
@@ -18,7 +19,8 @@ import {PokemonService} from '../services/pokemon.service';
   `]
 })
 export class ListComponent implements OnInit {
-  pokemons = [];
+  pokemons: PokemonData[] = [];
+  grid = false;
 
   constructor(protected service: PokemonService) {
     service.type = null;

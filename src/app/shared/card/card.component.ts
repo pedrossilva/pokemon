@@ -1,34 +1,34 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 import {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';
+import {Pokemon} from '../model/pokemon';
 
 @Component({
   selector: 'poke-card',
   template: `
     <div class="card">
-      <div class="card-body">
-        <span class="ident">#{{data.id}}</span>
+      <div class="card-body" *ngIf="pokemon">
+        <span class="ident">#{{pokemon.id}}</span>
         <div class="text-center wrap-img">
-            <img [src]="data.sprites.other.dream_world.front_default" alt="">
+            <img [src]="pokemon.img" alt="">
         </div>
-        <h5 class="card-title mt-2">{{data.name | titlecase}}</h5>
+        <h5 class="card-title mt-2">{{pokemon.name | titlecase}}</h5>
         <div class="mb-2">
-            <span class="badge badge-pill m-1" *ngFor="let item of data.types" [ngClass]="item.type.name">{{item.type.name | titlecase}}</span>
+            <span class="badge badge-pill badge-light m-1" *ngFor="let type of pokemon.types" [ngClass]="type">{{type | titlecase}}</span>
         </div>
         <div>
           <span class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faRulerVertical"></fa-icon>
-            {{data.height / 10}}m</span>
+            {{pokemon.height / 10}}m</span>
           <span class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faWeight"></fa-icon>
-            {{data.weight}} kg</span>
+            {{pokemon.weight}} kg</span>
         </div>
       </div>
     </div>
   `,
   styles: [`
     .card {
-      /*width: 18rem;*/
       max-width: 30em;
       text-align: center;
     }
@@ -58,13 +58,7 @@ export class CardComponent implements OnInit {
    * What background color to use
    */
   @Input()
-  data: any;
-
-  @Input()
-  name: string;
-
-  @Input()
-  img: string;
+  pokemon: Pokemon;
 
   constructor() { }
 

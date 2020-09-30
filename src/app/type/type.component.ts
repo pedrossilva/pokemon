@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PokemonService} from '../services/pokemon.service';
-import {NameUrl, Pokemon, Type} from '../shared/model/pokemon';
-import {Iterator} from '../shared/model/iterator';
+import {NameUrl, Pokemon, PokemonData, Type} from '../shared/model/pokemon';
 
 @Component({
   selector: 'poke-type',
   template: `
     <div class="header"></div>
     <div class="pokelist">
-      <div *ngFor="let pokemon of pokemons" class="p-1">
-        <poke-row [data]="pokemon"></poke-row>
+      <div *ngFor="let pokemonData of pokemons" class="p-1">
+        <poke-row [pokemon]="pokemonData | toPokemon"></poke-row>
       </div>
     </div>
     <div class="pagination text-center">
@@ -26,7 +25,7 @@ import {Iterator} from '../shared/model/iterator';
 export class TypeComponent implements OnInit {
   type: string;
   types: Type[];
-  pokemons: Pokemon[] = [];
+  pokemons: PokemonData[] = [];
   page: Page;
   typeSelected: Type;
 

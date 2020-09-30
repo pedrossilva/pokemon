@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject, forkJoin, Observable} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
 import {Page, Pagination} from '../shared/model/pagination';
-import {NameUrl, Pokemon, Type} from '../shared/model/pokemon';
+import {NameUrl, PokemonData, Type} from '../shared/model/pokemon';
 
 @Injectable({
   providedIn: 'root'

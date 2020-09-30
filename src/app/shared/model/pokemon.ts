@@ -1,6 +1,22 @@
 import {StatInfo} from './stat';
 
 export interface Pokemon {
+  id?: number;
+  name?: string;
+  height?: number;
+  order?: number;
+  img?: string;
+  stats?: Stat[];
+  types?: string[];
+  weight?: number;
+}
+
+export interface Stat {
+  name?: string;
+  value?: number;
+}
+
+export interface PokemonData {
   id: number;
   name: string;
   height: number;

@@ -5,11 +5,11 @@ import {Pokemon} from '../model/pokemon';
   selector: 'poke-row',
   template: `
     <div class="row align-items-center p-1">
-      <div class="col-12 col-md-4 card-wrap">
-        <poke-card [data]="data"></poke-card>
+      <div class="col-12 card-wrap" [ngClass]="{'col-md-4': !grid}">
+        <poke-card [pokemon]="pokemon"></poke-card>
       </div>
-      <div class="col mt-4">
-        <poke-stats [stats]="data.stats"></poke-stats>
+      <div class="col mt-4" [ngClass]="{'col-md-12': grid}">
+        <poke-stats [stats]="pokemon?.stats"></poke-stats>
       </div>
     </div>
   `,
@@ -22,7 +22,10 @@ import {Pokemon} from '../model/pokemon';
 })
 export class RowComponent implements OnInit {
 
-  @Input() data: Pokemon;
+  @Input()
+  pokemon: Pokemon;
+
+  @Input() grid = false;
 
   constructor() { }
 

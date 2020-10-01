@@ -1,6 +1,40 @@
 {
     "pipes": [
         {
+            "name": "ToPokemonPipe",
+            "id": "pipe-ToPokemonPipe-0c4b39ca1948a261da5f3c5feed4a0ad",
+            "file": "src/app/shared/pipe/to-pokemon.pipe.ts",
+            "type": "pipe",
+            "description": "",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "pokemonData",
+                            "type": "PokemonData"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Pokemon",
+                    "typeParameters": [],
+                    "line": 10,
+                    "jsdoctags": [
+                        {
+                            "name": "pokemonData",
+                            "type": "PokemonData",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ngname": "toPokemon",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport {Pokemon, PokemonData} from '../model/pokemon';\nimport {pokemonNormalize} from '../model/pokemon.normalize';\n\n@Pipe({\n  name: 'toPokemon'\n})\nexport class ToPokemonPipe implements PipeTransform {\n\n  transform(pokemonData: PokemonData): Pokemon {\n    return pokemonNormalize(pokemonData);\n  }\n\n}\n"
+        },
+        {
             "name": "TypeColorPipe",
             "id": "pipe-TypeColorPipe-f82c68b6f4eca52ab21497954112eb2e",
             "file": "src/app/shared/pipe/type-color.pipe.ts",
@@ -148,24 +182,24 @@
         },
         {
             "name": "NameUrl",
-            "id": "interface-NameUrl-c7a5ea2387fb8e481d6cff00eea80356",
+            "id": "interface-NameUrl-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "name",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 52
                 },
                 {
                     "name": "url",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 37
+                    "line": 53
                 }
             ],
             "indexSignatures": [],
@@ -174,24 +208,24 @@
         },
         {
             "name": "OtherSprites",
-            "id": "interface-OtherSprites-c7a5ea2387fb8e481d6cff00eea80356",
+            "id": "interface-OtherSprites-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "front_default",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 47
                 },
                 {
                     "name": "front_female",
                     "type": "string",
                     "optional": true,
                     "description": "",
-                    "line": 32
+                    "line": 48
                 }
             ],
             "indexSignatures": [],
@@ -287,64 +321,64 @@
         },
         {
             "name": "Pokemon",
-            "id": "interface-Pokemon-c7a5ea2387fb8e481d6cff00eea80356",
+            "id": "interface-Pokemon-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "height",
                     "type": "number",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
                     "line": 6
                 },
                 {
                     "name": "id",
                     "type": "number",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
                     "line": 4
                 },
                 {
+                    "name": "img",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 8
+                },
+                {
                     "name": "name",
                     "type": "string",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
                     "line": 5
                 },
                 {
                     "name": "order",
                     "type": "number",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
                     "line": 7
                 },
                 {
-                    "name": "sprites",
-                    "type": "Sprites",
-                    "optional": false,
-                    "description": "",
-                    "line": 8
-                },
-                {
                     "name": "stats",
-                    "type": "StatInfo[]",
-                    "optional": false,
+                    "type": "Stat[]",
+                    "optional": true,
                     "description": "",
                     "line": 9
                 },
                 {
                     "name": "types",
-                    "type": "TypeSlot[]",
-                    "optional": false,
+                    "type": "string[]",
+                    "optional": true,
                     "description": "",
                     "line": 10
                 },
                 {
                     "name": "weight",
                     "type": "number",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
                     "line": 11
                 }
@@ -354,104 +388,64 @@
             "methods": []
         },
         {
-            "name": "PokemonSlot",
-            "id": "interface-PokemonSlot-c7a5ea2387fb8e481d6cff00eea80356",
+            "name": "PokemonData",
+            "id": "interface-PokemonData-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
-                    "name": "pokemon",
-                    "type": "NameUrl",
-                    "optional": false,
-                    "description": "",
-                    "line": 47
-                },
-                {
-                    "name": "slot",
+                    "name": "height",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 46
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 150,
-            "methods": []
-        },
-        {
-            "name": "Sprites",
-            "id": "interface-Sprites-c7a5ea2387fb8e481d6cff00eea80356",
-            "file": "src/app/shared/model/pokemon.ts",
-            "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
-            "properties": [
-                {
-                    "name": "back_default",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 15
+                    "line": 22
                 },
                 {
-                    "name": "back_female",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 16
-                },
-                {
-                    "name": "back_shiny",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 17
-                },
-                {
-                    "name": "back_shiny_female",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 18
-                },
-                {
-                    "name": "front_default",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 19
-                },
-                {
-                    "name": "front_female",
-                    "type": "string",
+                    "name": "id",
+                    "type": "number",
                     "optional": false,
                     "description": "",
                     "line": 20
                 },
                 {
-                    "name": "front_shiny",
+                    "name": "name",
                     "type": "string",
                     "optional": false,
                     "description": "",
                     "line": 21
                 },
                 {
-                    "name": "front_shiny_female",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 22
-                },
-                {
-                    "name": "other",
-                    "type": "literal type",
+                    "name": "order",
+                    "type": "number",
                     "optional": false,
                     "description": "",
                     "line": 23
                 },
                 {
-                    "name": "versions",
-                    "type": "any",
+                    "name": "sprites",
+                    "type": "Sprites",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "stats",
+                    "type": "StatInfo[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
+                },
+                {
+                    "name": "types",
+                    "type": "TypeSlot[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                },
+                {
+                    "name": "weight",
+                    "type": "number",
                     "optional": false,
                     "description": "",
                     "line": 27
@@ -462,8 +456,142 @@
             "methods": []
         },
         {
+            "name": "PokemonSlot",
+            "id": "interface-PokemonSlot-7e47d817a71e04287e8ec3212d883f46",
+            "file": "src/app/shared/model/pokemon.ts",
+            "type": "interface",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "properties": [
+                {
+                    "name": "pokemon",
+                    "type": "NameUrl",
+                    "optional": false,
+                    "description": "",
+                    "line": 63
+                },
+                {
+                    "name": "slot",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 62
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "Sprites",
+            "id": "interface-Sprites-7e47d817a71e04287e8ec3212d883f46",
+            "file": "src/app/shared/model/pokemon.ts",
+            "type": "interface",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "properties": [
+                {
+                    "name": "back_default",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "back_female",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "back_shiny",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 33
+                },
+                {
+                    "name": "back_shiny_female",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 34
+                },
+                {
+                    "name": "front_default",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 35
+                },
+                {
+                    "name": "front_female",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "front_shiny",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 37
+                },
+                {
+                    "name": "front_shiny_female",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 38
+                },
+                {
+                    "name": "other",
+                    "type": "literal type",
+                    "optional": false,
+                    "description": "",
+                    "line": 39
+                },
+                {
+                    "name": "versions",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 43
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
             "name": "Stat",
-            "id": "interface-Stat-8cccd880149e668eea4c13143080c001",
+            "id": "interface-Stat-7e47d817a71e04287e8ec3212d883f46",
+            "file": "src/app/shared/model/pokemon.ts",
+            "type": "interface",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "value",
+                    "type": "number",
+                    "optional": true,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "Stat",
+            "id": "interface-Stat-8cccd880149e668eea4c13143080c001-1",
             "file": "src/app/shared/model/stat.ts",
             "type": "interface",
             "sourceCode": "export interface StatInfo {\n  base_stat: number;\n  effort: number;\n  stat: Stat;\n}\n\nexport interface Stat {\n  name: string;\n  url: string;\n}\n",
@@ -485,7 +613,10 @@
             ],
             "indexSignatures": [],
             "kind": 150,
-            "methods": []
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "Stat-1"
         },
         {
             "name": "StatInfo",
@@ -522,31 +653,31 @@
         },
         {
             "name": "Type",
-            "id": "interface-Type-c7a5ea2387fb8e481d6cff00eea80356",
+            "id": "interface-Type-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "id",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 51
+                    "line": 67
                 },
                 {
                     "name": "name",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 52
+                    "line": 68
                 },
                 {
                     "name": "pokemon",
                     "type": "PokemonSlot[]",
                     "optional": false,
                     "description": "",
-                    "line": 53
+                    "line": 69
                 }
             ],
             "indexSignatures": [],
@@ -555,24 +686,24 @@
         },
         {
             "name": "TypeSlot",
-            "id": "interface-TypeSlot-c7a5ea2387fb8e481d6cff00eea80356",
+            "id": "interface-TypeSlot-7e47d817a71e04287e8ec3212d883f46",
             "file": "src/app/shared/model/pokemon.ts",
             "type": "interface",
-            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
+            "sourceCode": "import {StatInfo} from './stat';\n\nexport interface Pokemon {\n  id?: number;\n  name?: string;\n  height?: number;\n  order?: number;\n  img?: string;\n  stats?: Stat[];\n  types?: string[];\n  weight?: number;\n}\n\nexport interface Stat {\n  name?: string;\n  value?: number;\n}\n\nexport interface PokemonData {\n  id: number;\n  name: string;\n  height: number;\n  order: number;\n  sprites: Sprites;\n  stats: StatInfo[];\n  types: TypeSlot[];\n  weight: number;\n}\n\nexport interface Sprites {\n  back_default: string;\n  back_female: string;\n  back_shiny: string;\n  back_shiny_female: string;\n  front_default: string;\n  front_female: string;\n  front_shiny: string;\n  front_shiny_female: string;\n  other: {\n    dream_world: OtherSprites,\n    'official-artwork': OtherSprites\n  };\n  versions: any;\n}\n\nexport interface OtherSprites {\n  front_default: string;\n  front_female?: string;\n}\n\nexport interface NameUrl {\n  name: string;\n  url: string;\n}\n\nexport interface TypeSlot {\n  slot: number;\n  type: NameUrl;\n}\n\nexport interface PokemonSlot {\n  slot: number;\n  pokemon: NameUrl;\n}\n\nexport interface Type {\n  id: number;\n  name: string;\n  pokemon: PokemonSlot[];\n}\n",
             "properties": [
                 {
                     "name": "slot",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 41
+                    "line": 57
                 },
                 {
                     "name": "type",
                     "type": "NameUrl",
                     "optional": false,
                     "description": "",
-                    "line": 42
+                    "line": 58
                 }
             ],
             "indexSignatures": [],
@@ -583,7 +714,7 @@
     "injectables": [
         {
             "name": "PokemonService",
-            "id": "injectable-PokemonService-46f770755f481c51ade0a5c7f1f48b7c",
+            "id": "injectable-PokemonService-40a309fbd4b48dd4df90dfab407ad797",
             "file": "src/app/services/pokemon.service.ts",
             "properties": [
                 {
@@ -825,7 +956,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Page, Pagination} from '../shared/model/pagination';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  private pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  private typesSource = new BehaviorSubject<Type[]>([]);\n  types = this.typesSource.asObservable();\n\n  type: string;\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  getList(list: NameUrl[]): Observable<any> {\n    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));\n    return forkJoin(...observables);\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n\n  getTypes(): Observable<any> {\n    this.http.get(`${environment.api}/type/`)\n      .pipe(mergeMap((response) => {\n        const {results} = response as any;\n        const observables = results.map(type => this.http.get(type.url));\n        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));\n      })).subscribe(data => console.log(data));\n\n    return this.types;\n  }\n}\n\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Page, Pagination} from '../shared/model/pagination';\nimport {NameUrl, PokemonData, Type} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  private pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  private typesSource = new BehaviorSubject<Type[]>([]);\n  types = this.typesSource.asObservable();\n\n  type: string;\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  getList(list: NameUrl[]): Observable<any> {\n    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));\n    return forkJoin(...observables);\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n\n  getTypes(): Observable<any> {\n    this.http.get(`${environment.api}/type/`)\n      .pipe(mergeMap((response) => {\n        const {results} = response as any;\n        const observables = results.map(type => this.http.get(type.url));\n        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));\n      })).subscribe(data => console.log(data));\n\n    return this.types;\n  }\n}\n\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -883,10 +1014,10 @@
         },
         {
             "name": "Page",
-            "id": "class-Page-420c1ade73002474520c7406524b75ab",
+            "id": "class-Page-1f33f94823286dc340a8831cffccba56",
             "file": "src/app/type/type.component.ts",
             "type": "class",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\nimport {Iterator} from '../shared/model/iterator';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n        <poke-row [data]=\"pokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: Pokemon[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, PokemonData, Type} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -896,7 +1027,7 @@
                         "type": "NameUrl[]"
                     }
                 ],
-                "line": 88,
+                "line": 87,
                 "jsdoctags": [
                     {
                         "name": "items",
@@ -913,7 +1044,7 @@
                     "type": "NameUrl[]",
                     "optional": false,
                     "description": "",
-                    "line": 90,
+                    "line": 89,
                     "modifierKind": [
                         114
                     ]
@@ -924,7 +1055,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 88,
+                    "line": 87,
                     "modifierKind": [
                         112
                     ]
@@ -935,7 +1066,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 87,
+                    "line": 86,
                     "modifierKind": [
                         112
                     ]
@@ -950,7 +1081,7 @@
                     "optional": false,
                     "returnType": "IteratorResult<NameUrl[]>",
                     "typeParameters": [],
-                    "line": 93,
+                    "line": 92,
                     "modifierKind": [
                         114
                     ]
@@ -1046,7 +1177,7 @@
         },
         {
             "name": "CardComponent",
-            "id": "component-CardComponent-91c611a0a3ae0876dc6a7339574f5b10",
+            "id": "component-CardComponent-5c724d8c414610c567a5f7ac5e48c865",
             "file": "src/app/shared/card/card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1056,30 +1187,27 @@
             "selector": "poke-card",
             "styleUrls": [],
             "styles": [
-                "\n    .card {\n      /*width: 18rem;*/\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  "
+                "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  "
             ],
-            "template": "<div class=\"card\">\n  <div class=\"card-body\">\n    <span class=\"ident\">#{{data.id}}</span>\n    <div class=\"text-center wrap-img\">\n        <img [src]=\"data.sprites.other.dream_world.front_default\" alt=\"\">\n    </div>\n    <h5 class=\"card-title mt-2\">{{data.name | titlecase}}</h5>\n    <div class=\"mb-2\">\n        <span class=\"badge badge-pill m-1\" *ngFor=\"let item of data.types\" [ngClass]=\"item.type.name\">{{item.type.name | titlecase}}</span>\n    </div>\n    <div>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n        {{data.height / 10}}m</span>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faWeight\"></fa-icon>\n        {{data.weight}} kg</span>\n    </div>\n  </div>\n</div>\n",
+            "template": "<div class=\"card\">\n  <div class=\"card-body\" *ngIf=\"pokemon\">\n    <span class=\"ident\">#{{pokemon.id}}</span>\n    <div class=\"text-center wrap-img\">\n        <img [src]=\"pokemon.img\" alt=\"\">\n    </div>\n    <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n    <div class=\"mb-2\">\n        <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n    </div>\n    <div>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n        {{pokemon.height / 10}}m</span>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faWeight\"></fa-icon>\n        {{pokemon.weight}} kg</span>\n    </div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "data",
+                    "name": "pokemon",
                     "description": "<p>What background color to use</p>\n",
                     "line": 61,
-                    "type": "any"
-                },
-                {
-                    "name": "img",
-                    "line": 67,
-                    "type": "string"
-                },
-                {
-                    "name": "name",
-                    "line": 64,
-                    "type": "string"
+                    "type": "Pokemon"
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "favorite",
+                    "defaultValue": "new EventEmitter<boolean>()",
+                    "line": 64,
+                    "type": "EventEmitter"
+                }
+            ],
             "propertiesClass": [
                 {
                     "name": "faRulerVertical",
@@ -1105,7 +1233,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 71
+                    "line": 68
                 }
             ],
             "hostBindings": [],
@@ -1113,15 +1241,15 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\n\nimport {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';\n\n@Component({\n  selector: 'poke-card',\n  template: `\n    <div class=\"card\">\n      <div class=\"card-body\">\n        <span class=\"ident\">#{{data.id}}</span>\n        <div class=\"text-center wrap-img\">\n            <img [src]=\"data.sprites.other.dream_world.front_default\" alt=\"\">\n        </div>\n        <h5 class=\"card-title mt-2\">{{data.name | titlecase}}</h5>\n        <div class=\"mb-2\">\n            <span class=\"badge badge-pill m-1\" *ngFor=\"let item of data.types\" [ngClass]=\"item.type.name\">{{item.type.name | titlecase}}</span>\n        </div>\n        <div>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n            {{data.height / 10}}m</span>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faWeight\"></fa-icon>\n            {{data.weight}} kg</span>\n        </div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card {\n      /*width: 18rem;*/\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  `]\n})\nexport class CardComponent implements OnInit {\n\n  faRulerVertical = faRulerVertical;\n  faWeight = faWeight;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  data: any;\n\n  @Input()\n  name: string;\n\n  @Input()\n  img: string;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';\n\nimport {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-card',\n  template: `\n    <div class=\"card\">\n      <div class=\"card-body\" *ngIf=\"pokemon\">\n        <span class=\"ident\">#{{pokemon.id}}</span>\n        <div class=\"text-center wrap-img\">\n            <img [src]=\"pokemon.img\" alt=\"\">\n        </div>\n        <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n        <div class=\"mb-2\">\n            <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n        </div>\n        <div>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n            {{pokemon.height / 10}}m</span>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faWeight\"></fa-icon>\n            {{pokemon.weight}} kg</span>\n        </div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  `]\n})\nexport class CardComponent implements OnInit {\n\n  faRulerVertical = faRulerVertical;\n  faWeight = faWeight;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  pokemon: Pokemon;\n\n  @Output()\n  favorite = new EventEmitter<boolean>();\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n    .card {\n      /*width: 18rem;*/\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  \n",
+            "stylesData": "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 67
+                "line": 64
             },
             "implements": [
                 "OnInit"
@@ -1129,7 +1257,7 @@
         },
         {
             "name": "ListComponent",
-            "id": "component-ListComponent-3fea9f6b0c49c52805a0d123e9ef2288",
+            "id": "component-ListComponent-3161570c8659a698341889064e460a4d",
             "file": "src/app/list/list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1141,7 +1269,7 @@
             "styles": [
                 "\n  "
             ],
-            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n  <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n    <poke-row [data]=\"pokemon\" [grid]=\"grid\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination\">\n  <poke-paginator></poke-paginator>\n</div>\n",
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination\">\n  <poke-paginator></poke-paginator>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -1153,15 +1281,15 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 23
                 },
                 {
                     "name": "pokemons",
                     "defaultValue": "[]",
-                    "type": "[]",
+                    "type": "PokemonData[]",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 22
                 }
             ],
             "methodsClass": [
@@ -1171,7 +1299,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 28
+                    "line": 29
                 }
             ],
             "hostBindings": [],
@@ -1179,7 +1307,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../services/pokemon.service';\n\n@Component({\n  selector: 'poke-list',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n        <poke-row [data]=\"pokemon\" [grid]=\"grid\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination\">\n      <poke-paginator></poke-paginator>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class ListComponent implements OnInit {\n  pokemons = [];\n  grid = false;\n\n  constructor(protected service: PokemonService) {\n    service.type = null;\n  }\n\n  ngOnInit(): void {\n    this.service.updateList().subscribe();\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../services/pokemon.service';\nimport {PokemonData} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-list',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination\">\n      <poke-paginator></poke-paginator>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class ListComponent implements OnInit {\n  pokemons: PokemonData[] = [];\n  grid = false;\n\n  constructor(protected service: PokemonService) {\n    service.type = null;\n  }\n\n  ngOnInit(): void {\n    this.service.updateList().subscribe();\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n  \n",
@@ -1192,7 +1320,7 @@
                         "type": "PokemonService"
                     }
                 ],
-                "line": 22,
+                "line": 23,
                 "jsdoctags": [
                     {
                         "name": "service",
@@ -1363,7 +1491,7 @@
         },
         {
             "name": "RowComponent",
-            "id": "component-RowComponent-13d34370c5ba854e3aa721f7d9dcd59b",
+            "id": "component-RowComponent-679f24b8b44c668ba1e1706ef87acd71",
             "file": "src/app/shared/row/row.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1375,19 +1503,19 @@
             "styles": [
                 "\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  "
             ],
-            "template": "<div class=\"row align-items-center p-1\">\n  <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n    <poke-card [data]=\"data\"></poke-card>\n  </div>\n  <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n    <poke-stats [stats]=\"data.stats\"></poke-stats>\n  </div>\n</div>\n",
+            "template": "<div class=\"row align-items-center p-1\">\n  <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n    <poke-card [pokemon]=\"pokemon\"></poke-card>\n  </div>\n  <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n    <poke-stats [stats]=\"pokemon?.stats\"></poke-stats>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "data",
-                    "line": 25,
-                    "type": "Pokemon"
-                },
-                {
                     "name": "grid",
                     "defaultValue": "false",
-                    "line": 26
+                    "line": 28
+                },
+                {
+                    "name": "pokemon",
+                    "line": 26,
+                    "type": "Pokemon"
                 }
             ],
             "outputsClass": [],
@@ -1399,7 +1527,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 30
+                    "line": 32
                 }
             ],
             "hostBindings": [],
@@ -1407,7 +1535,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-row',\n  template: `\n    <div class=\"row align-items-center p-1\">\n      <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n        <poke-card [data]=\"data\"></poke-card>\n      </div>\n      <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n        <poke-stats [stats]=\"data.stats\"></poke-stats>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class RowComponent implements OnInit {\n\n  @Input() data: Pokemon;\n  @Input() grid = false;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-row',\n  template: `\n    <div class=\"row align-items-center p-1\">\n      <div class=\"col-12 card-wrap\" [ngClass]=\"{'col-md-4': !grid}\">\n        <poke-card [pokemon]=\"pokemon\"></poke-card>\n      </div>\n      <div class=\"col mt-4\" [ngClass]=\"{'col-md-12': grid}\">\n        <poke-stats [stats]=\"pokemon?.stats\"></poke-stats>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class RowComponent implements OnInit {\n\n  @Input()\n  pokemon: Pokemon;\n\n  @Input() grid = false;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    .card-wrap {\n      max-width: 515px;\n      margin: 0 auto;\n    }\n  \n",
@@ -1415,7 +1543,7 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 26
+                "line": 28
             },
             "implements": [
                 "OnInit"
@@ -1631,7 +1759,7 @@
         },
         {
             "name": "StatsComponent",
-            "id": "component-StatsComponent-8963c767abb25ee09346f5c6fe75af9d",
+            "id": "component-StatsComponent-9e71bd79627e926ae916e44b60caa2d6",
             "file": "src/app/shared/stats/stats.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1643,14 +1771,14 @@
             "styles": [
                 "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  "
             ],
-            "template": "<div class=\"stats-bars\">\n  <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n    <div class=\"col-3 text-right label-val\">\n      <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n      <span class=\"val\">{{item.base_stat}}</span>\n    </div>\n    <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n  </div>\n</div>\n",
+            "template": "<div class=\"stats-bars\">\n  <div class=\"row mb-2\" *ngFor=\"let stat of stats\">\n    <div class=\"col-3 text-right label-val\">\n      <strong class=\"mr-4\">{{stat.name | titlecase}}</strong>\n      <span class=\"val\">{{stat.value}}</span>\n    </div>\n    <div class=\"col\"><poke-stat-bar [value]=\"stat.value\"></poke-stat-bar></div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
                     "name": "stats",
                     "line": 35,
-                    "type": "StatInfo[]"
+                    "type": "Stat[]"
                 }
             ],
             "outputsClass": [],
@@ -1670,7 +1798,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {StatInfo} from '../model/stat';\n\n@Component({\n  selector: 'poke-stats',\n  template: `\n    <div class=\"stats-bars\">\n      <div class=\"row mb-2\" *ngFor=\"let item of stats\">\n        <div class=\"col-3 text-right label-val\">\n          <strong class=\"mr-4\">{{item.stat.name | titlecase}}</strong>\n          <span class=\"val\">{{item.base_stat}}</span>\n        </div>\n        <div class=\"col\"><poke-stat-bar [value]=\"item.base_stat\"></poke-stat-bar></div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class StatsComponent implements OnInit {\n\n  @Input()\n  stats: StatInfo[];\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Stat} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-stats',\n  template: `\n    <div class=\"stats-bars\">\n      <div class=\"row mb-2\" *ngFor=\"let stat of stats\">\n        <div class=\"col-3 text-right label-val\">\n          <strong class=\"mr-4\">{{stat.name | titlecase}}</strong>\n          <span class=\"val\">{{stat.value}}</span>\n        </div>\n        <div class=\"col\"><poke-stat-bar [value]=\"stat.value\"></poke-stat-bar></div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  `]\n})\nexport class StatsComponent implements OnInit {\n\n  @Input()\n  stats: Stat[];\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    .val {\n      min-width: 2.5em;\n      display: inline-block;\n    }\n    .label-val {\n      min-width: 15em;\n      max-width: 15em;\n    }\n    .stats-bars {\n      max-width: 1600px;\n      margin: 0 auto;\n    }\n  \n",
@@ -1686,7 +1814,7 @@
         },
         {
             "name": "TypeComponent",
-            "id": "component-TypeComponent-420c1ade73002474520c7406524b75ab",
+            "id": "component-TypeComponent-1f33f94823286dc340a8831cffccba56",
             "file": "src/app/type/type.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1696,7 +1824,7 @@
             "selector": "poke-type",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\">\n  <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n    <poke-row [data]=\"pokemon\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination text-center\">\n  <div class=\"m-auto\">\n    <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n    <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n  </div>\n</div>\n",
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\">\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination text-center\">\n  <div class=\"m-auto\">\n    <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n    <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -1707,36 +1835,36 @@
                     "type": "Page",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 29
                 },
                 {
                     "name": "pokemons",
                     "defaultValue": "[]",
-                    "type": "Pokemon[]",
+                    "type": "PokemonData[]",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 28
                 },
                 {
                     "name": "type",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 26
                 },
                 {
                     "name": "types",
                     "type": "Type[]",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 27
                 },
                 {
                     "name": "typeSelected",
                     "type": "Type",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 30
                 }
             ],
             "methodsClass": [
@@ -1746,7 +1874,7 @@
                     "optional": false,
                     "returnType": "Pokemon[]",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 58,
                     "description": "<p>Get type by name and define list with first 10 items</p>\n"
                 },
                 {
@@ -1755,7 +1883,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 73,
+                    "line": 72,
                     "description": "<p>Load +10 items on click in &quot;Learn More...&quot;</p>\n"
                 },
                 {
@@ -1764,7 +1892,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 35
+                    "line": 34
                 }
             ],
             "hostBindings": [],
@@ -1772,7 +1900,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, Type} from '../shared/model/pokemon';\nimport {Iterator} from '../shared/model/iterator';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemon of pokemons\" class=\"p-1\">\n        <poke-row [data]=\"pokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: Pokemon[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, PokemonData, Type} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1789,7 +1917,7 @@
                         "type": "PokemonService"
                     }
                 ],
-                "line": 31,
+                "line": 30,
                 "jsdoctags": [
                     {
                         "name": "activatedRoute",
@@ -2085,6 +2213,9 @@
                             "name": "StatsComponent"
                         },
                         {
+                            "name": "ToPokemonPipe"
+                        },
+                        {
                             "name": "TypeColorPipe"
                         },
                         {
@@ -2104,6 +2235,9 @@
                         },
                         {
                             "name": "RowComponent"
+                        },
+                        {
+                            "name": "ToPokemonPipe"
                         },
                         {
                             "name": "TypesMenuComponent"
@@ -2253,6 +2387,14 @@
                 "defaultValue": "{\n  production: false,\n  api: `http://pokeapi.co/api/v2`\n}"
             },
             {
+                "name": "pokemonNormalize",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/model/pokemon.normalize.ts",
+                "type": "",
+                "defaultValue": "(data): Pokemon => {\n\n  const normalize = {\n    set(obj, prop, value): boolean {\n      const accept = ['id', 'name', 'height', 'order', 'sprites', 'stats', 'types', 'weight', 'img'];\n      if (!accept.includes(prop)) {\n        return true;\n      }\n\n      if (prop === 'sprites') {\n        value = (value as Sprites).other.dream_world.front_default;\n        obj.img = value;\n        return true;\n      }\n      if (prop === 'types') {\n        value = (value as TypeSlot[]).map(type => type.type.name);\n      }\n      if (prop === 'stats') {\n        value = (value as StatInfo[]).map(stat => {\n          const { base_stat, stat:{ name } } = stat;\n          return { name, value: base_stat };\n        });\n      }\n\n      obj[prop] = value;\n      return true;\n    }\n  };\n\n  const proxy = new Proxy<Pokemon>({}, normalize);\n  const normalized = Object.assign(proxy, data || {});\n  return Object.assign({}, normalized);\n}"
+            },
+            {
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2289,10 +2431,20 @@
                 "subtype": "variable",
                 "file": "src/stories/Stats.stories.ts",
                 "type": "Story<StatsComponent>",
-                "defaultValue": "(args: StatsComponent) => ({\n  component: StatsComponent,\n  props: args,\n})"
+                "defaultValue": "(args: StatsComponent): any => ({\n  component: StatsComponent,\n  props: args,\n})"
             }
         ],
-        "functions": [],
+        "functions": [
+            {
+                "name": "mockPokemon",
+                "file": "src/stories/mock/pokemon.mock.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "<p>Mock pokemon data</p>\n",
+                "args": [],
+                "returnType": "PokemonData"
+            }
+        ],
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
@@ -2382,7 +2534,7 @@
                     "subtype": "variable",
                     "file": "src/stories/Stats.stories.ts",
                     "type": "Story<StatsComponent>",
-                    "defaultValue": "(args: StatsComponent) => ({\n  component: StatsComponent,\n  props: args,\n})"
+                    "defaultValue": "(args: StatsComponent): any => ({\n  component: StatsComponent,\n  props: args,\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -2404,9 +2556,31 @@
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  api: `http://pokeapi.co/api/v2`\n}"
                 }
+            ],
+            "src/app/shared/model/pokemon.normalize.ts": [
+                {
+                    "name": "pokemonNormalize",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/model/pokemon.normalize.ts",
+                    "type": "",
+                    "defaultValue": "(data): Pokemon => {\n\n  const normalize = {\n    set(obj, prop, value): boolean {\n      const accept = ['id', 'name', 'height', 'order', 'sprites', 'stats', 'types', 'weight', 'img'];\n      if (!accept.includes(prop)) {\n        return true;\n      }\n\n      if (prop === 'sprites') {\n        value = (value as Sprites).other.dream_world.front_default;\n        obj.img = value;\n        return true;\n      }\n      if (prop === 'types') {\n        value = (value as TypeSlot[]).map(type => type.type.name);\n      }\n      if (prop === 'stats') {\n        value = (value as StatInfo[]).map(stat => {\n          const { base_stat, stat:{ name } } = stat;\n          return { name, value: base_stat };\n        });\n      }\n\n      obj[prop] = value;\n      return true;\n    }\n  };\n\n  const proxy = new Proxy<Pokemon>({}, normalize);\n  const normalized = Object.assign(proxy, data || {});\n  return Object.assign({}, normalized);\n}"
+                }
             ]
         },
-        "groupedFunctions": {},
+        "groupedFunctions": {
+            "src/stories/mock/pokemon.mock.ts": [
+                {
+                    "name": "mockPokemon",
+                    "file": "src/stories/mock/pokemon.mock.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "<p>Mock pokemon data</p>\n",
+                    "args": [],
+                    "returnType": "PokemonData"
+                }
+            ]
+        },
         "groupedEnumerations": {},
         "groupedTypeAliases": {}
     },
@@ -2479,7 +2653,7 @@
         ]
     },
     "coverage": {
-        "count": 1,
+        "count": 3,
         "status": "low",
         "files": [
             {
@@ -2532,8 +2706,8 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "CardComponent",
-                "coveragePercent": 12,
-                "coverageCount": "1/8",
+                "coveragePercent": 14,
+                "coverageCount": "1/7",
                 "status": "low"
             },
             {
@@ -2573,6 +2747,16 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/model/pokemon.normalize.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "pokemonNormalize",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/model/pokemon.ts",
                 "type": "interface",
                 "linktype": "interface",
@@ -2603,6 +2787,15 @@
                 "filePath": "src/app/shared/model/pokemon.ts",
                 "type": "interface",
                 "linktype": "interface",
+                "name": "PokemonData",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/pokemon.ts",
+                "type": "interface",
+                "linktype": "interface",
                 "name": "PokemonSlot",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
@@ -2615,6 +2808,15 @@
                 "name": "Sprites",
                 "coveragePercent": 0,
                 "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/pokemon.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Stat",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -2660,6 +2862,15 @@
                 "name": "PaginatorComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/pipe/to-pokemon.pipe.ts",
+                "type": "pipe",
+                "linktype": "pipe",
+                "name": "ToPokemonPipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -2824,6 +3035,15 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "src/stories/mock/pokemon.mock.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "mockPokemon",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/test.ts",

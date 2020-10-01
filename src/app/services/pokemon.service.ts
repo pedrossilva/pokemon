@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject, forkJoin, Observable} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
-import {Page, Pagination} from '../shared/model/pagination';
-import {NameUrl, PokemonData, Type} from '../shared/model/pokemon';
+import {Pagination} from '../shared/model/pagination';
+import {NameUrl, Type} from '../shared/model/pokemon';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class PokemonService {
       .pipe(mergeMap((response) => {
         const {next, previous, count, results} = response as any;
         this.setPagination({next, previous, count, url});
-        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
+        return this.getList(results).pipe(map(pokemons => !this.pokemonsSource.getValue().length && this.pokemonsSource.next(pokemons)));
       }));
   }
 
@@ -99,7 +99,7 @@ export class PokemonService {
         const {results} = response as any;
         const observables = results.map(type => this.http.get(type.url));
         return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));
-      })).subscribe(data => console.log(data));
+      })).subscribe();
 
     return this.types;
   }

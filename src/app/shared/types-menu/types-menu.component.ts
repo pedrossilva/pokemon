@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PokemonService} from '../../services/pokemon.service';
 import {Type} from '../model/pokemon';
 import {ActivatedRoute} from '@angular/router';
+import {faHome, faHeart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'poke-types-menu',
@@ -10,10 +11,18 @@ import {ActivatedRoute} from '@angular/router';
     <ul>
       <li [ngClass]="{'selected': service.type === null}">
         <a class="btn btn-light mt-1 mb-1 pl-md-5" routerLink="list">
-          <span class="circle dark"></span>
+<!--          <span class="circle dark"></span>-->
+          <span class="circle"><fa-icon [icon]="faHome"></fa-icon></span>
           <span class="label">All</span>
         </a>
       </li>
+      <li [ngClass]="{'selected': service.type === 'favorites'}">
+        <a class="btn btn-light mt-1 mb-1 pl-md-5" routerLink="type/favorites">
+          <span class="circle"><fa-icon [icon]="faHeart"></fa-icon></span>
+          <span class="label">Favorites</span>
+        </a>
+      </li>
+      <hr>
       <li *ngFor="let type of types" [ngClass]="{'selected': type.name === service.type}" [hidden]="typeByName && !typeByName[type.name]?.pokemon?.length">
         <a class="btn btn-light mt-1 mb-1 pl-md-5" [routerLink]="['type', type.name]">
           <span class="circle" [ngClass]="type.name"></span>
@@ -55,11 +64,8 @@ import {ActivatedRoute} from '@angular/router';
       position: absolute;
       top: 0.5em;
       left: 0.5em;
-    }
-    .spc {
-      width: 1.6em;
-      height: 1.6em;
-      display: inline-block;
+      text-align: center;
+      line-height: 1.8em;
     }
     .label {
       position: relative;
@@ -70,6 +76,8 @@ import {ActivatedRoute} from '@angular/router';
 export class TypesMenuComponent implements OnInit {
   types: Type[];
   typeByName: {[key: string]: Type} = {};
+  faHome = faHome;
+  faHeart = faHeart;
 
   constructor(public service: PokemonService, private activatedRoute: ActivatedRoute) { }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PokemonService} from '../services/pokemon.service';
 import {PokemonData} from '../shared/model/pokemon';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'poke-list',
@@ -21,6 +22,7 @@ import {PokemonData} from '../shared/model/pokemon';
 export class ListComponent implements OnInit {
   pokemons: PokemonData[] = [];
   grid = false;
+  pokemonsSubscription: Subscription;
 
   constructor(protected service: PokemonService) {
     service.type = null;

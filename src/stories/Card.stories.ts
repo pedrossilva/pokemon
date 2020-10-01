@@ -6,6 +6,7 @@ import {CardComponent} from '../app/shared/card/card.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {pokemonNormalize} from '../app/shared/model/pokemon.normalize';
 import {mockPokemon} from './mock/pokemon.mock';
+import {action} from '@storybook/addon-actions';
 
 export default {
   title: 'Pokemon/Card',
@@ -19,12 +20,14 @@ export default {
   ]
 } as Meta;
 
-const Template: Story<CardComponent> = (args: CardComponent) => ({
-  component: CardComponent,
-  props: args,
-});
-
-export const Default = Template.bind({});
-Default.args = {
-  pokemon: pokemonNormalize(mockPokemon())
+export const actionsData = {
+  onFavorite: action('favorite'),
 };
+
+export const Default: Story<CardComponent> = () => ({
+  component: CardComponent,
+  props: {
+    pokemon: pokemonNormalize(mockPokemon()),
+    onFavorite: actionsData.onFavorite
+  }
+});

@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Pagination} from '../model/pagination';
 import {PokemonService} from '../../services/pokemon.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'poke-paginator',
@@ -42,7 +43,9 @@ import {PokemonService} from '../../services/pokemon.service';
     }
   `]
 })
-export class PaginatorComponent implements OnInit {
+export class PaginatorComponent implements OnInit, OnDestroy {
+  paginatorSubscription: Subscription;
+
   get limit(): number {
     return this.pagination.limit;
   }
@@ -75,7 +78,11 @@ export class PaginatorComponent implements OnInit {
   constructor(public service: PokemonService) { }
 
   ngOnInit(): void {
-    this.service.pagination.subscribe(pagination => (this.pagination = pagination));
+    this.paginatorSubscription = this.service.pagination.subscribe(pagination => (this.pagination = pagination));
+  }
+
+  ngOnDestroy(): void {
+    this.paginatorSubscription && this.paginatorSubscription.unsubscribe();
   }
 
 }

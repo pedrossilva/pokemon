@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject, forkJoin, Observable} from 'rxjs';
-import {map, mergeMap} from 'rxjs/operators';
+import {map, mergeMap, finalize} from 'rxjs/operators';
 import {Pagination} from '../shared/model/pagination';
 import {NameUrl, Type} from '../shared/model/pokemon';
+import {LoadingService} from '../shared/loading/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,20 +32,26 @@ export class PokemonService {
 
   type: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loading: LoadingService) { }
 
   updateList(url = this.getUrl()): Observable<any> {
+    this.loading.show = true;
     return this.http.get(url)
       .pipe(mergeMap((response) => {
         const {next, previous, count, results} = response as any;
         this.setPagination({next, previous, count, url});
         return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
+      })).pipe(finalize(() => {
+        this.loading.show = false;
       }));
   }
 
   getList(list: NameUrl[]): Observable<any> {
+    this.loading.show = true;
     const observables = (list || []).map(pokemon => this.http.get(pokemon.url));
-    return forkJoin(...observables);
+    return forkJoin(...observables).pipe(finalize(() => {
+      this.loading.show = false;
+    }));
   }
 
   next(): void {

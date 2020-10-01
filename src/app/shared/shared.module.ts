@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
 import { TypesMenuComponent } from './types-menu/types-menu.component';
 import {RouterModule} from '@angular/router';
 import { ToPokemonPipe } from './pipe/to-pokemon.pipe';
+import { LoadingComponent } from './loading/loading.component';
 
 
 
@@ -27,7 +28,8 @@ import { ToPokemonPipe } from './pipe/to-pokemon.pipe';
     RowComponent,
     PaginatorComponent,
     TypesMenuComponent,
-    ToPokemonPipe
+    ToPokemonPipe,
+    LoadingComponent
   ],
   declarations: [
     CardComponent,
@@ -37,7 +39,8 @@ import { ToPokemonPipe } from './pipe/to-pokemon.pipe';
     RowComponent,
     PaginatorComponent,
     TypesMenuComponent,
-    ToPokemonPipe
+    ToPokemonPipe,
+    LoadingComponent
   ]
 })
 export class SharedModule { }

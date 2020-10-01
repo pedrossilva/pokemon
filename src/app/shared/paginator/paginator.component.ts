@@ -2,6 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Pagination} from '../model/pagination';
 import {PokemonService} from '../../services/pokemon.service';
 import {Subscription} from 'rxjs';
+import {faTh, faThList} from '@fortawesome/free-solid-svg-icons';
+import {WebstorageService} from '../../services/webstorage.service';
 
 @Component({
   selector: 'poke-paginator',
@@ -25,6 +27,9 @@ import {Subscription} from 'rxjs';
           <option value="30">30</option>
         </select>
       </div>
+      <div class="m-2 col typelist-select">
+        <fa-icon [icon]="typeListIcon" (click)="toggleTypeList()"></fa-icon>
+      </div>
     </div>
   `,
   styles: [`
@@ -41,10 +46,16 @@ import {Subscription} from 'rxjs';
       outline: none;
       box-shadow: unset;
     }
+    .typelist-select {
+      font-size: 1.4em;
+      cursor: pointer;
+    }
   `]
 })
 export class PaginatorComponent implements OnInit, OnDestroy {
   paginatorSubscription: Subscription;
+  typeList = 'list';
+  typeListIcon = faTh;
 
   get limit(): number {
     return this.pagination.limit;
@@ -75,10 +86,20 @@ export class PaginatorComponent implements OnInit, OnDestroy {
     this.pages = showPages;
   }
 
-  constructor(public service: PokemonService) { }
+  constructor(public service: PokemonService, private storage: WebstorageService) { }
 
   ngOnInit(): void {
     this.paginatorSubscription = this.service.pagination.subscribe(pagination => (this.pagination = pagination));
+
+    this.storage.options.subscribe(options => {
+      this.typeList = options?.typeList || 'list';
+      this.typeListIcon = this.typeList === 'grid' ? faThList : faTh;
+    });
+  }
+
+  toggleTypeList(): void {
+    const typeList = this.typeList === 'list' ? 'grid' : 'list';
+    this.storage.saveOptions('typeList', typeList);
   }
 
   ngOnDestroy(): void {

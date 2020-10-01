@@ -20,7 +20,7 @@ export class PokemonService {
     url: ''
   };
 
-  private pokemonsSource = new BehaviorSubject([]);
+  public pokemonsSource = new BehaviorSubject([]);
   pokemons = this.pokemonsSource.asObservable();
 
   private paginationSource = new BehaviorSubject<Pagination>({});
@@ -38,7 +38,7 @@ export class PokemonService {
       .pipe(mergeMap((response) => {
         const {next, previous, count, results} = response as any;
         this.setPagination({next, previous, count, url});
-        return this.getList(results).pipe(map(pokemons => !this.pokemonsSource.getValue().length && this.pokemonsSource.next(pokemons)));
+        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));
       }));
   }
 

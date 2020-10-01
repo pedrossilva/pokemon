@@ -714,7 +714,7 @@
     "injectables": [
         {
             "name": "PokemonService",
-            "id": "injectable-PokemonService-40a309fbd4b48dd4df90dfab407ad797",
+            "id": "injectable-PokemonService-b2b5d2073e07a34df28ff9c0a710d29f",
             "file": "src/app/services/pokemon.service.ts",
             "properties": [
                 {
@@ -763,7 +763,7 @@
                     "description": "",
                     "line": 23,
                     "modifierKind": [
-                        112
+                        114
                     ]
                 },
                 {
@@ -956,7 +956,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Page, Pagination} from '../shared/model/pagination';\nimport {NameUrl, PokemonData, Type} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  private pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  private typesSource = new BehaviorSubject<Type[]>([]);\n  types = this.typesSource.asObservable();\n\n  type: string;\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  getList(list: NameUrl[]): Observable<any> {\n    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));\n    return forkJoin(...observables);\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n\n  getTypes(): Observable<any> {\n    this.http.get(`${environment.api}/type/`)\n      .pipe(mergeMap((response) => {\n        const {results} = response as any;\n        const observables = results.map(type => this.http.get(type.url));\n        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));\n      })).subscribe(data => console.log(data));\n\n    return this.types;\n  }\n}\n\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport {HttpClient} from '@angular/common/http';\nimport {environment} from '../../environments/environment';\nimport {BehaviorSubject, forkJoin, Observable} from 'rxjs';\nimport {map, mergeMap} from 'rxjs/operators';\nimport {Pagination} from '../shared/model/pagination';\nimport {NameUrl, Type} from '../shared/model/pokemon';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class PokemonService {\n  private _pagination: Pagination = {\n    count: 0,\n    page: 0,\n    limit: 10,\n    offset: 0,\n    next: '',\n    previous: '',\n    url: ''\n  };\n\n  public pokemonsSource = new BehaviorSubject([]);\n  pokemons = this.pokemonsSource.asObservable();\n\n  private paginationSource = new BehaviorSubject<Pagination>({});\n  pagination = this.paginationSource.asObservable();\n\n  private typesSource = new BehaviorSubject<Type[]>([]);\n  types = this.typesSource.asObservable();\n\n  type: string;\n\n  constructor(private http: HttpClient) { }\n\n  updateList(url = this.getUrl()): Observable<any> {\n    return this.http.get(url)\n      .pipe(mergeMap((response) => {\n        const {next, previous, count, results} = response as any;\n        this.setPagination({next, previous, count, url});\n        return this.getList(results).pipe(map(pokemons => this.pokemonsSource.next(pokemons)));\n      }));\n  }\n\n  getList(list: NameUrl[]): Observable<any> {\n    const observables = (list || []).map(pokemon => this.http.get(pokemon.url));\n    return forkJoin(...observables);\n  }\n\n  next(): void {\n    this.updateList(this._pagination.next).subscribe();\n  }\n\n  previous(): void {\n    this.updateList(this._pagination.previous).subscribe();\n  }\n\n  page(page): void {\n    if(isNaN(page)) return;\n    const { limit } = this._pagination;\n    this.updateList(this.getUrl({page: page - 1, limit})).subscribe();\n  }\n\n  getUrl(pagination = this._pagination): string {\n    const {page, limit} = pagination || {};\n    const offset = page * limit;\n    pagination.url = `${environment.api}/pokemon/?limit=${limit}&offset=${offset}`;\n    this.setPagination(pagination);\n    return pagination.url;\n  }\n\n  getLimitOffset(url: string): {limit?: number, offset?: number} {\n    if(!url) return {};\n    const [_, search] = url.split('?');\n    const urlParams = new URLSearchParams(search);\n    return {\n      limit: +urlParams.get('limit'),\n      offset: +urlParams.get('offset')\n    };\n  }\n\n  setPagination(pagination: Pagination): void {\n    if(!pagination) {\n      pagination = {};\n    }\n    const { limit, offset } = this.getLimitOffset(pagination.url);\n    const newPaginator = Object.assign( pagination, {\n      limit: limit || pagination.limit,\n      offset: offset || pagination.offset,\n      page: !offset ? 1 : (offset / limit) + 1\n    });\n    Object.assign(this._pagination, newPaginator);\n    this.paginationSource.next(newPaginator);\n  }\n\n  getTypes(): Observable<any> {\n    this.http.get(`${environment.api}/type/`)\n      .pipe(mergeMap((response) => {\n        const {results} = response as any;\n        const observables = results.map(type => this.http.get(type.url));\n        return forkJoin(...observables).pipe(map(types => this.typesSource.next(types)));\n      })).subscribe();\n\n    return this.types;\n  }\n}\n\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -971,6 +971,152 @@
                     {
                         "name": "http",
                         "type": "HttpClient",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "WebstorageService",
+            "id": "injectable-WebstorageService-7d31dc5d808e2fc4bde820ee8baed7b3",
+            "file": "src/app/services/webstorage.service.ts",
+            "properties": [
+                {
+                    "name": "favorites",
+                    "defaultValue": "this.favoritesSource.asObservable()",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                },
+                {
+                    "name": "favoritesSource",
+                    "defaultValue": "new BehaviorSubject<Favorites>({})",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "options",
+                    "defaultValue": "this.optionsSource.asObservable()",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
+                    "name": "optionsSource",
+                    "defaultValue": "new BehaviorSubject<Favorites>({})",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "saveFavorite",
+                    "args": [
+                        {
+                            "name": "id",
+                            "type": "number"
+                        },
+                        {
+                            "name": "name",
+                            "type": "string | \"undefined\"",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Favorites",
+                    "typeParameters": [],
+                    "line": 38,
+                    "description": "<p>Save localStorage favorite and apply in BehaviorSubject</p>\n",
+                    "modifierKind": [
+                        114
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "id",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "name",
+                            "type": "string | \"undefined\"",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "saveOptions",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        },
+                        {
+                            "name": "value",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Favorites",
+                    "typeParameters": [],
+                    "line": 49,
+                    "description": "<p>Save localStorage options and apply in BehaviorSubject</p>\n",
+                    "modifierKind": [
+                        114
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "description": "",
+            "sourceCode": "import {Inject, Injectable} from '@angular/core';\nimport {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';\nimport {BehaviorSubject} from 'rxjs';\n\nconst STORAGE_FAVORITES = 'favorites';\nconst STORAGE_OPTIONS = 'options';\ntype Favorites = {[key: string]: string};\ntype Options = {[key: string]: any};\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class WebstorageService {\n\n  private favoritesSource = new BehaviorSubject<Favorites>({});\n  favorites = this.favoritesSource.asObservable();\n\n  private optionsSource = new BehaviorSubject<Favorites>({});\n  options = this.optionsSource.asObservable();\n\n  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {\n    /**\n     * get localStorage favorites and apply in BehaviorSubject\n     */\n    const favorites: Favorites = this.storage.get(STORAGE_FAVORITES) || {};\n    this.favoritesSource.next(favorites);\n\n    /**\n     * get localStorage options and apply in BehaviorSubject\n     */\n    const options: Options = this.storage.get(STORAGE_OPTIONS) || {};\n    this.optionsSource.next(options);\n  }\n\n  /**\n   * Save localStorage favorite and apply in BehaviorSubject\n   */\n  public saveFavorite(id: number, name?: string | false): Favorites {\n    const favorites: Favorites = this.storage.get(STORAGE_FAVORITES) || {};\n    !name ? delete favorites[id] : favorites[id] = name;\n    this.favoritesSource.next(favorites);\n    this.storage.set(STORAGE_FAVORITES, favorites);\n    return favorites;\n  }\n\n  /**\n   * Save localStorage options and apply in BehaviorSubject\n   */\n  public saveOptions(key: string, value: any): Favorites {\n    const options: Options = this.storage.get(STORAGE_OPTIONS) || {};\n    options[key] = value;\n    this.optionsSource.next(options);\n    this.storage.set(STORAGE_OPTIONS, options);\n    return options;\n  }\n\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "storage",
+                        "type": "StorageService"
+                    }
+                ],
+                "line": 19,
+                "jsdoctags": [
+                    {
+                        "name": "storage",
+                        "type": "StorageService",
                         "tagName": {
                             "text": "param"
                         }
@@ -1014,10 +1160,10 @@
         },
         {
             "name": "Page",
-            "id": "class-Page-1f33f94823286dc340a8831cffccba56",
+            "id": "class-Page-7c7ef9f231851fc2cba452d43c7e9325",
             "file": "src/app/type/type.component.ts",
             "type": "class",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, PokemonData, Type} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "sourceCode": "import {Component, OnDestroy, OnInit} from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, PokemonData, Type} from '../shared/model/pokemon';\nimport {WebstorageService} from '../services/webstorage.service';\nimport {environment} from '../../environments/environment';\nimport {Subscription} from 'rxjs';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div class=\"alert alert-light\" [hidden]=\"totalPokemons\">{{type === 'favorites' ? 'No favorites' : 'No data'}}</div>\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{totalPokemons}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= totalPokemons\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit, OnDestroy {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n  totalPokemons = 0;\n  favorites: NameUrl[] = [];\n  favoritesSubscription: Subscription;\n  typesSubscription: Subscription;\n\n  constructor(\n    private activatedRoute: ActivatedRoute,\n    private service: PokemonService,\n    private storage: WebstorageService\n  ) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      return this.checkSubscriptions() || this.makeList();\n    });\n\n  }\n\n  checkSubscriptions(): boolean {\n    let newSubscription = false;\n    if(this.type === 'favorites' && !this.favoritesSubscription) {\n      /**\n       * get localStorage favorites and set pages\n       */\n      this.favoritesSubscription = this.storage.favorites.subscribe(favorites => {\n        const names = Object.values(favorites || {});\n        this.favorites = names.map(name => ({name, url: `${environment.api}/pokemon/${name}`}));\n        if (this.type === 'favorites') {\n          this.makeList();\n        }\n      });\n      newSubscription = true;\n    }\n    if(this.type !== 'favorites' && !this.typesSubscription) {\n      /**\n       * set this.types on update types in service\n       */\n      this.typesSubscription = this.service.types.subscribe(types => {\n        this.types = types;\n        this.makeList();\n      });\n      newSubscription = true;\n    }\n    return newSubscription;\n  }\n\n  makeList(): void {\n    (this.type === 'favorites') ? this.setPages(this.favorites) : this.getList();\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): void {\n    if(!this.type || !this.types) return;\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return;\n    this.setPages(type.pokemon.map(poke => poke.pokemon));\n  }\n\n  setPages(pokelist: NameUrl[]): void {\n    this.totalPokemons = pokelist.length;\n    this.page = new Page(pokelist);\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n  ngOnDestroy(): void {\n    this.type = undefined;\n    this.favorites = [];\n    this.pokemons = [];\n    this.favoritesSubscription && this.favoritesSubscription.unsubscribe();\n    this.typesSubscription && this.typesSubscription.unsubscribe();\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1027,7 +1173,7 @@
                         "type": "NameUrl[]"
                     }
                 ],
-                "line": 87,
+                "line": 136,
                 "jsdoctags": [
                     {
                         "name": "items",
@@ -1044,7 +1190,7 @@
                     "type": "NameUrl[]",
                     "optional": false,
                     "description": "",
-                    "line": 89,
+                    "line": 138,
                     "modifierKind": [
                         114
                     ]
@@ -1055,7 +1201,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 87,
+                    "line": 136,
                     "modifierKind": [
                         112
                     ]
@@ -1066,7 +1212,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 86,
+                    "line": 135,
                     "modifierKind": [
                         112
                     ]
@@ -1081,7 +1227,7 @@
                     "optional": false,
                     "returnType": "IteratorResult<NameUrl[]>",
                     "typeParameters": [],
-                    "line": 92,
+                    "line": 141,
                     "modifierKind": [
                         114
                     ]
@@ -1177,7 +1323,7 @@
         },
         {
             "name": "CardComponent",
-            "id": "component-CardComponent-5c724d8c414610c567a5f7ac5e48c865",
+            "id": "component-CardComponent-be8c64aa5d8c8febd3991db65b21c4e6",
             "file": "src/app/shared/card/card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1187,35 +1333,51 @@
             "selector": "poke-card",
             "styleUrls": [],
             "styles": [
-                "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  "
+                "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      top: 15px;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n    .favorite {\n      position: absolute;\n      top: 15px;\n      right: 15px;\n      font-size: 28px;\n      line-height: 1em;\n      opacity: 0.3;\n      cursor: pointer;\n    }\n    .favorite:hover {\n      opacity: 0.4;\n    }\n    .favorite.selected {\n      color: var(--danger);\n      opacity: 1;\n    }\n  "
             ],
-            "template": "<div class=\"card\">\n  <div class=\"card-body\" *ngIf=\"pokemon\">\n    <span class=\"ident\">#{{pokemon.id}}</span>\n    <div class=\"text-center wrap-img\">\n        <img [src]=\"pokemon.img\" alt=\"\">\n    </div>\n    <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n    <div class=\"mb-2\">\n        <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n    </div>\n    <div>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n        {{pokemon.height / 10}}m</span>\n      <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faWeight\"></fa-icon>\n        {{pokemon.weight}} kg</span>\n    </div>\n  </div>\n</div>\n",
+            "template": "<div class=\"card\">\n  <div class=\"card-body\" *ngIf=\"pokemon\">\n    <span class=\"ident\">#{{pokemon.id}}</span>\n    <span class=\"favorite\" (click)=\"toggleFavorite()\" [ngClass]=\"{'selected': favorited}\">\n      <fa-icon [icon]=\"faHeart\"></fa-icon>\n    </span>\n    <div class=\"text-center wrap-img\">\n        <img [src]=\"pokemon.img\" alt=\"\">\n    </div>\n    <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n    <div class=\"mb-2\">\n        <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n    </div>\n    <div>\n      <span [hidden]=\"!pokemon.height\" class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n        {{pokemon.height}}m</span>\n      <span [hidden]=\"!pokemon.weight\" class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n        <fa-icon [icon]=\"faWeight\"></fa-icon>\n        {{pokemon.weight}} kg</span>\n    </div>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
                     "name": "pokemon",
                     "description": "<p>What background color to use</p>\n",
-                    "line": 61,
+                    "line": 84,
                     "type": "Pokemon"
                 }
             ],
             "outputsClass": [
                 {
-                    "name": "favorite",
+                    "name": "onFavorite",
                     "defaultValue": "new EventEmitter<boolean>()",
-                    "line": 64,
+                    "line": 87,
                     "type": "EventEmitter"
                 }
             ],
             "propertiesClass": [
+                {
+                    "name": "faHeart",
+                    "defaultValue": "faHeart",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 77
+                },
                 {
                     "name": "faRulerVertical",
                     "defaultValue": "faRulerVertical",
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 54
+                    "line": 75
+                },
+                {
+                    "name": "favorited",
+                    "defaultValue": "false",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 78
                 },
                 {
                     "name": "faWeight",
@@ -1223,7 +1385,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 55
+                    "line": 76
                 }
             ],
             "methodsClass": [
@@ -1233,7 +1395,15 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 68
+                    "line": 91
+                },
+                {
+                    "name": "toggleFavorite",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 97
                 }
             ],
             "hostBindings": [],
@@ -1241,15 +1411,29 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';\n\nimport {faRulerVertical, faWeight} from '@fortawesome/free-solid-svg-icons';\nimport {Pokemon} from '../model/pokemon';\n\n@Component({\n  selector: 'poke-card',\n  template: `\n    <div class=\"card\">\n      <div class=\"card-body\" *ngIf=\"pokemon\">\n        <span class=\"ident\">#{{pokemon.id}}</span>\n        <div class=\"text-center wrap-img\">\n            <img [src]=\"pokemon.img\" alt=\"\">\n        </div>\n        <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n        <div class=\"mb-2\">\n            <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n        </div>\n        <div>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n            {{pokemon.height / 10}}m</span>\n          <span class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faWeight\"></fa-icon>\n            {{pokemon.weight}} kg</span>\n        </div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  `]\n})\nexport class CardComponent implements OnInit {\n\n  faRulerVertical = faRulerVertical;\n  faWeight = faWeight;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  pokemon: Pokemon;\n\n  @Output()\n  favorite = new EventEmitter<boolean>();\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';\n\nimport {faRulerVertical, faWeight, faHeart} from '@fortawesome/free-solid-svg-icons';\nimport {Pokemon} from '../model/pokemon';\nimport {WebstorageService} from '../../services/webstorage.service';\n\n@Component({\n  selector: 'poke-card',\n  template: `\n    <div class=\"card\">\n      <div class=\"card-body\" *ngIf=\"pokemon\">\n        <span class=\"ident\">#{{pokemon.id}}</span>\n        <span class=\"favorite\" (click)=\"toggleFavorite()\" [ngClass]=\"{'selected': favorited}\">\n          <fa-icon [icon]=\"faHeart\"></fa-icon>\n        </span>\n        <div class=\"text-center wrap-img\">\n            <img [src]=\"pokemon.img\" alt=\"\">\n        </div>\n        <h5 class=\"card-title mt-2\">{{pokemon.name | titlecase}}</h5>\n        <div class=\"mb-2\">\n            <span class=\"badge badge-pill badge-light m-1\" *ngFor=\"let type of pokemon.types\" [ngClass]=\"type\">{{type | titlecase}}</span>\n        </div>\n        <div>\n          <span [hidden]=\"!pokemon.height\" class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faRulerVertical\"></fa-icon>\n            {{pokemon.height}}m</span>\n          <span [hidden]=\"!pokemon.weight\" class=\"alert alert-secondary d-inline-block m-1 pt-0 pb-0\">\n            <fa-icon [icon]=\"faWeight\"></fa-icon>\n            {{pokemon.weight}} kg</span>\n        </div>\n      </div>\n    </div>\n  `,\n  styles: [`\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      top: 15px;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n    .favorite {\n      position: absolute;\n      top: 15px;\n      right: 15px;\n      font-size: 28px;\n      line-height: 1em;\n      opacity: 0.3;\n      cursor: pointer;\n    }\n    .favorite:hover {\n      opacity: 0.4;\n    }\n    .favorite.selected {\n      color: var(--danger);\n      opacity: 1;\n    }\n  `]\n})\nexport class CardComponent implements OnInit {\n\n  faRulerVertical = faRulerVertical;\n  faWeight = faWeight;\n  faHeart = faHeart;\n  favorited = false;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  pokemon: Pokemon;\n\n  @Output()\n  onFavorite = new EventEmitter<boolean>();\n\n  constructor(private storage: WebstorageService) { }\n\n  ngOnInit(): void {\n    this.storage.favorites.subscribe(favorites => {\n      this.favorited = !!favorites[this.pokemon.id];\n    });\n  }\n\n  toggleFavorite(): void {\n    this.favorited = !this.favorited;\n    this.onFavorite.emit(this.favorited);\n    const { id, name } = this.pokemon;\n    this.storage.saveFavorite(id, this.favorited && name);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n  \n",
+            "stylesData": "\n    .card {\n      max-width: 30em;\n      text-align: center;\n    }\n    .card img {\n      max-width: 50%;\n    }\n    .ident {\n      position: absolute;\n      top: 15px;\n      left: 15px;\n      font-size: 50px;\n      line-height: 1em;\n      opacity: 0.3;\n      font-weight: bold;\n      text-shadow: 0px 0px 4px white;\n    }\n    .wrap-img {\n      min-height: 70px;\n    }\n    .favorite {\n      position: absolute;\n      top: 15px;\n      right: 15px;\n      font-size: 28px;\n      line-height: 1em;\n      opacity: 0.3;\n      cursor: pointer;\n    }\n    .favorite:hover {\n      opacity: 0.4;\n    }\n    .favorite.selected {\n      color: var(--danger);\n      opacity: 1;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 64
+                "args": [
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService"
+                    }
+                ],
+                "line": 87,
+                "jsdoctags": [
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "implements": [
                 "OnInit"
@@ -1257,7 +1441,7 @@
         },
         {
             "name": "ListComponent",
-            "id": "component-ListComponent-3161570c8659a698341889064e460a4d",
+            "id": "component-ListComponent-3d2012e50a08cca2b5dba3830ae38087",
             "file": "src/app/list/list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1269,7 +1453,7 @@
             "styles": [
                 "\n  "
             ],
-            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination\">\n  <poke-paginator></poke-paginator>\n</div>\n",
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\" [ngClass]=\"{'row grid': grid}\">\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination\">\n  <poke-paginator></poke-paginator>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -1281,7 +1465,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 24
                 },
                 {
                     "name": "pokemons",
@@ -1289,7 +1473,7 @@
                     "type": "PokemonData[]",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 23
                 }
             ],
             "methodsClass": [
@@ -1299,7 +1483,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 29
+                    "line": 30
                 }
             ],
             "hostBindings": [],
@@ -1307,7 +1491,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../services/pokemon.service';\nimport {PokemonData} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-list',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\" [ngClass]=\"{'row': grid}\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination\">\n      <poke-paginator></poke-paginator>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class ListComponent implements OnInit {\n  pokemons: PokemonData[] = [];\n  grid = false;\n\n  constructor(protected service: PokemonService) {\n    service.type = null;\n  }\n\n  ngOnInit(): void {\n    this.service.updateList().subscribe();\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n  }\n\n}\n",
+            "sourceCode": "import {Component, OnInit} from '@angular/core';\nimport {PokemonService} from '../services/pokemon.service';\nimport {PokemonData} from '../shared/model/pokemon';\nimport {WebstorageService} from '../services/webstorage.service';\n\n@Component({\n  selector: 'poke-list',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\" [ngClass]=\"{'row grid': grid}\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\" [ngClass]=\"{'col-md-6 col-lg-4 col-xl-3': grid}\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\" [grid]=\"grid\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination\">\n      <poke-paginator></poke-paginator>\n    </div>\n  `,\n  styles: [`\n  `]\n})\nexport class ListComponent implements OnInit {\n  pokemons: PokemonData[] = [];\n  grid = false;\n\n  constructor(protected service: PokemonService, private storage: WebstorageService) {\n    service.type = null;\n  }\n\n  ngOnInit(): void {\n    // if(!this.pokemons.length) {\n    if(!this.service.pokemonsSource.getValue().length) {\n      this.service.updateList().subscribe();\n    }\n\n    this.service.pokemons.subscribe(pokemons => {\n      this.pokemons = pokemons;\n    });\n\n    this.storage.options.subscribe(options => this.grid = options.typeList === 'grid');\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n  \n",
@@ -1318,13 +1502,24 @@
                     {
                         "name": "service",
                         "type": "PokemonService"
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService"
                     }
                 ],
-                "line": 23,
+                "line": 24,
                 "jsdoctags": [
                     {
                         "name": "service",
                         "type": "PokemonService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService",
                         "tagName": {
                             "text": "param"
                         }
@@ -1337,7 +1532,7 @@
         },
         {
             "name": "PaginatorComponent",
-            "id": "component-PaginatorComponent-abb006c4c5eac450f59b529613c099c3",
+            "id": "component-PaginatorComponent-1c6974bd01ec5fc341b0f7f4b899e65c",
             "file": "src/app/shared/paginator/paginator.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1347,9 +1542,9 @@
             "selector": "poke-paginator",
             "styleUrls": [],
             "styles": [
-                "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  "
+                "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n    .typelist-select {\n      font-size: 1.4em;\n      cursor: pointer;\n    }\n  "
             ],
-            "template": "<div class=\"row\">\n  <div class=\"col\">\n    <nav aria-label=\"Page navigation example\">\n      <ul class=\"pagination\">\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n        <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n            [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n      </ul>\n    </nav>\n  </div>\n\n  <div class=\"m-2 col\">\n    <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n      <option value=\"10\">10</option>\n      <option value=\"20\">20</option>\n      <option value=\"30\">30</option>\n    </select>\n  </div>\n</div>\n",
+            "template": "<div class=\"row\">\n  <div class=\"col\">\n    <nav aria-label=\"Page navigation example\">\n      <ul class=\"pagination\">\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n        <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n            [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n        <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n      </ul>\n    </nav>\n  </div>\n\n  <div class=\"m-2 col\">\n    <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n      <option value=\"10\">10</option>\n      <option value=\"20\">20</option>\n      <option value=\"30\">30</option>\n    </select>\n  </div>\n  <div class=\"m-2 col typelist-select\">\n    <fa-icon [icon]=\"typeListIcon\" (click)=\"toggleTypeList()\"></fa-icon>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -1360,7 +1555,7 @@
                     "type": "Pagination",
                     "optional": false,
                     "description": "",
-                    "line": 55,
+                    "line": 69,
                     "modifierKind": [
                         112
                     ]
@@ -1371,27 +1566,66 @@
                     "type": "(number | string)[]",
                     "optional": false,
                     "description": "",
-                    "line": 54
+                    "line": 68
+                },
+                {
+                    "name": "paginatorSubscription",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 56
                 },
                 {
                     "name": "service",
                     "type": "PokemonService",
                     "optional": false,
                     "description": "",
-                    "line": 75,
+                    "line": 89,
                     "modifierKind": [
                         114
                     ]
+                },
+                {
+                    "name": "typeList",
+                    "defaultValue": "'list'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 57
+                },
+                {
+                    "name": "typeListIcon",
+                    "defaultValue": "faTh",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 58
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 105
+                },
                 {
                     "name": "ngOnInit",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 77
+                    "line": 91
+                },
+                {
+                    "name": "toggleTypeList",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 100
                 }
             ],
             "hostBindings": [],
@@ -1399,10 +1633,10 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\nimport {Pagination} from '../model/pagination';\nimport {PokemonService} from '../../services/pokemon.service';\n\n@Component({\n  selector: 'poke-paginator',\n  template: `\n    <div class=\"row\">\n      <div class=\"col\">\n        <nav aria-label=\"Page navigation example\">\n          <ul class=\"pagination\">\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n            <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n                [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n          </ul>\n        </nav>\n      </div>\n\n      <div class=\"m-2 col\">\n        <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n          <option value=\"10\">10</option>\n          <option value=\"20\">20</option>\n          <option value=\"30\">30</option>\n        </select>\n      </div>\n    </div>\n  `,\n  styles: [`\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  `]\n})\nexport class PaginatorComponent implements OnInit {\n  get limit(): number {\n    return this.pagination.limit;\n  }\n  set limit(limit: number) {\n    this.service.setPagination({offset: limit, limit, page: 1});\n    this.service.page(1);\n  }\n\n  pages: (number | string)[] = [];\n  private _pagination: Pagination;\n  get pagination(): Pagination {\n    return this._pagination;\n  }\n\n  set pagination(pagination: Pagination) {\n    this._pagination = pagination;\n    const { count, limit, page } = pagination;\n    if(!count) return;\n    const numPages = Math.ceil(count / limit);\n    const show = [-page + 1, '...', -2, -1, 0, 1, 2, '...', numPages - page];\n    if(page < 4) show.splice(0, 2);\n    if(page > numPages - 4) show.splice(-2);\n\n    const showPages = show.map(n => (page + +n) || n)\n      .filter(v => v === '...' || v > 0 && v <= numPages);\n\n    this.pages = showPages;\n  }\n\n  constructor(public service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.service.pagination.subscribe(pagination => (this.pagination = pagination));\n  }\n\n}\n",
+            "sourceCode": "import {Component, Input, OnDestroy, OnInit} from '@angular/core';\nimport {Pagination} from '../model/pagination';\nimport {PokemonService} from '../../services/pokemon.service';\nimport {Subscription} from 'rxjs';\nimport {faTh, faThList} from '@fortawesome/free-solid-svg-icons';\nimport {WebstorageService} from '../../services/webstorage.service';\n\n@Component({\n  selector: 'poke-paginator',\n  template: `\n    <div class=\"row\">\n      <div class=\"col\">\n        <nav aria-label=\"Page navigation example\">\n          <ul class=\"pagination\">\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.previous()\" [disabled]=\"!pagination.previous\">Previous</button></li>\n            <li *ngFor=\"let page of pages\" class=\"page-item\"><button class=\"page-link\" (click)=\"service.page(page)\"\n                [disabled]=\"pagination.page === page\" [ngClass]=\"{'d-none d-md-block': page === '...' || page > this.pagination.page + 1 || page < this.pagination.page - 1}\">{{page}}</button></li>\n            <li class=\"page-item\"><button class=\"page-link\" (click)=\"service.next()\" [disabled]=\"!pagination.next\">Next</button></li>\n          </ul>\n        </nav>\n      </div>\n\n      <div class=\"m-2 col\">\n        <select [(ngModel)]=\"limit\" class=\"form-control form-control-sm w-auto\" name=\"perpage\" id=\"perpage\">\n          <option value=\"10\">10</option>\n          <option value=\"20\">20</option>\n          <option value=\"30\">30</option>\n        </select>\n      </div>\n      <div class=\"m-2 col typelist-select\">\n        <fa-icon [icon]=\"typeListIcon\" (click)=\"toggleTypeList()\"></fa-icon>\n      </div>\n    </div>\n  `,\n  styles: [`\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n    .typelist-select {\n      font-size: 1.4em;\n      cursor: pointer;\n    }\n  `]\n})\nexport class PaginatorComponent implements OnInit, OnDestroy {\n  paginatorSubscription: Subscription;\n  typeList = 'list';\n  typeListIcon = faTh;\n\n  get limit(): number {\n    return this.pagination.limit;\n  }\n  set limit(limit: number) {\n    this.service.setPagination({offset: limit, limit, page: 1});\n    this.service.page(1);\n  }\n\n  pages: (number | string)[] = [];\n  private _pagination: Pagination;\n  get pagination(): Pagination {\n    return this._pagination;\n  }\n\n  set pagination(pagination: Pagination) {\n    this._pagination = pagination;\n    const { count, limit, page } = pagination;\n    if(!count) return;\n    const numPages = Math.ceil(count / limit);\n    const show = [-page + 1, '...', -2, -1, 0, 1, 2, '...', numPages - page];\n    if(page < 4) show.splice(0, 2);\n    if(page > numPages - 4) show.splice(-2);\n\n    const showPages = show.map(n => (page + +n) || n)\n      .filter(v => v === '...' || v > 0 && v <= numPages);\n\n    this.pages = showPages;\n  }\n\n  constructor(public service: PokemonService, private storage: WebstorageService) { }\n\n  ngOnInit(): void {\n    this.paginatorSubscription = this.service.pagination.subscribe(pagination => (this.pagination = pagination));\n\n    this.storage.options.subscribe(options => {\n      this.typeList = options?.typeList || 'list';\n      this.typeListIcon = this.typeList === 'grid' ? faThList : faTh;\n    });\n  }\n\n  toggleTypeList(): void {\n    const typeList = this.typeList === 'list' ? 'grid' : 'list';\n    this.storage.saveOptions('typeList', typeList);\n  }\n\n  ngOnDestroy(): void {\n    this.paginatorSubscription && this.paginatorSubscription.unsubscribe();\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n  \n",
+            "stylesData": "\n    nav {\n      margin: 0 auto;\n    }\n    .pagination li button[disabled] {\n      background-color: #eeeeee;\n    }\n    .page-link {\n      color: var(--gray-dark);\n    }\n    select.form-control {\n      outline: none;\n      box-shadow: unset;\n    }\n    .typelist-select {\n      font-size: 1.4em;\n      cursor: pointer;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1410,9 +1644,13 @@
                     {
                         "name": "service",
                         "type": "PokemonService"
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService"
                     }
                 ],
-                "line": 73,
+                "line": 87,
                 "jsdoctags": [
                     {
                         "name": "service",
@@ -1420,11 +1658,19 @@
                         "tagName": {
                             "text": "param"
                         }
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService",
+                        "tagName": {
+                            "text": "param"
+                        }
                     }
                 ]
             },
             "implements": [
-                "OnInit"
+                "OnInit",
+                "OnDestroy"
             ],
             "accessors": {
                 "limit": {
@@ -1439,7 +1685,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 49,
+                        "line": 63,
                         "jsdoctags": [
                             {
                                 "name": "limit",
@@ -1454,7 +1700,7 @@
                         "name": "limit",
                         "type": "number",
                         "returnType": "number",
-                        "line": 46
+                        "line": 60
                     }
                 },
                 "pagination": {
@@ -1469,7 +1715,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 60,
+                        "line": 74,
                         "jsdoctags": [
                             {
                                 "name": "pagination",
@@ -1484,7 +1730,7 @@
                         "name": "pagination",
                         "type": "",
                         "returnType": "Pagination",
-                        "line": 56
+                        "line": 70
                     }
                 }
             }
@@ -1814,7 +2060,7 @@
         },
         {
             "name": "TypeComponent",
-            "id": "component-TypeComponent-1f33f94823286dc340a8831cffccba56",
+            "id": "component-TypeComponent-7c7ef9f231851fc2cba452d43c7e9325",
             "file": "src/app/type/type.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1824,18 +2070,33 @@
             "selector": "poke-type",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\">\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination text-center\">\n  <div class=\"m-auto\">\n    <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n    <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n  </div>\n</div>\n",
+            "template": "<div class=\"header\"></div>\n<div class=\"pokelist\">\n  <div class=\"alert alert-light\" [hidden]=\"totalPokemons\">{{type === 'favorites' ? 'No favorites' : 'No data'}}</div>\n  <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n    <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n  </div>\n</div>\n<div class=\"pagination text-center\">\n  <div class=\"m-auto\">\n    <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{totalPokemons}}</button>\n    <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= totalPokemons\">Load More...</button>\n  </div>\n</div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "favorites",
+                    "defaultValue": "[]",
+                    "type": "NameUrl[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "favoritesSubscription",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 37
+                },
+                {
                     "name": "page",
                     "type": "Page",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 33
                 },
                 {
                     "name": "pokemons",
@@ -1843,39 +2104,70 @@
                     "type": "PokemonData[]",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 32
+                },
+                {
+                    "name": "totalPokemons",
+                    "defaultValue": "0",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 35
                 },
                 {
                     "name": "type",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 30
                 },
                 {
                     "name": "types",
                     "type": "Type[]",
                     "optional": false,
                     "description": "",
-                    "line": 27
+                    "line": 31
                 },
                 {
                     "name": "typeSelected",
                     "type": "Type",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 34
+                },
+                {
+                    "name": "typesSubscription",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 38
                 }
             ],
             "methodsClass": [
                 {
+                    "name": "checkSubscriptions",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 60
+                },
+                {
                     "name": "getList",
                     "args": [],
                     "optional": false,
-                    "returnType": "Pokemon[]",
+                    "returnType": "void",
                     "typeParameters": [],
-                    "line": 58,
+                    "line": 95,
                     "description": "<p>Get type by name and define list with first 10 items</p>\n"
+                },
+                {
+                    "name": "makeList",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 88
                 },
                 {
                     "name": "next",
@@ -1883,8 +2175,16 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 72,
+                    "line": 113,
                     "description": "<p>Load +10 items on click in &quot;Learn More...&quot;</p>\n"
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 121
                 },
                 {
                     "name": "ngOnInit",
@@ -1892,7 +2192,29 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 34
+                    "line": 46
+                },
+                {
+                    "name": "setPages",
+                    "args": [
+                        {
+                            "name": "pokelist",
+                            "type": "NameUrl[]"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 103,
+                    "jsdoctags": [
+                        {
+                            "name": "pokelist",
+                            "type": "NameUrl[]",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "hostBindings": [],
@@ -1900,7 +2222,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, Pokemon, PokemonData, Type} from '../shared/model/pokemon';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{typeSelected?.pokemon?.length}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= typeSelected?.pokemon?.length\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n\n  constructor(private activatedRoute: ActivatedRoute, private service: PokemonService) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      this.getList();\n    });\n\n    /**\n     * set this.types on update types in service\n     */\n    this.service.types.subscribe(types => {\n      this.types = types;\n      this.getList();\n    });\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): Pokemon[] {\n    if(!this.type || !this.types) return [];\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return [];\n\n    this.page = new Page(type.pokemon.map(poke => poke.pokemon));\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
+            "sourceCode": "import {Component, OnDestroy, OnInit} from '@angular/core';\nimport {ActivatedRoute} from '@angular/router';\nimport {PokemonService} from '../services/pokemon.service';\nimport {NameUrl, PokemonData, Type} from '../shared/model/pokemon';\nimport {WebstorageService} from '../services/webstorage.service';\nimport {environment} from '../../environments/environment';\nimport {Subscription} from 'rxjs';\n\n@Component({\n  selector: 'poke-type',\n  template: `\n    <div class=\"header\"></div>\n    <div class=\"pokelist\">\n      <div class=\"alert alert-light\" [hidden]=\"totalPokemons\">{{type === 'favorites' ? 'No favorites' : 'No data'}}</div>\n      <div *ngFor=\"let pokemonData of pokemons\" class=\"p-1\">\n        <poke-row [pokemon]=\"pokemonData | toPokemon\"></poke-row>\n      </div>\n    </div>\n    <div class=\"pagination text-center\">\n      <div class=\"m-auto\">\n        <button disabled class=\"btn btn-light btn-sm mr-4\">{{pokemons.length}} / {{totalPokemons}}</button>\n        <button class=\"btn btn-light btn-sm\" (click)=\"next()\" [hidden]=\"pokemons.length >= totalPokemons\">Load More...</button>\n      </div>\n    </div>\n  `,\n  styles: [\n  ]\n})\nexport class TypeComponent implements OnInit, OnDestroy {\n  type: string;\n  types: Type[];\n  pokemons: PokemonData[] = [];\n  page: Page;\n  typeSelected: Type;\n  totalPokemons = 0;\n  favorites: NameUrl[] = [];\n  favoritesSubscription: Subscription;\n  typesSubscription: Subscription;\n\n  constructor(\n    private activatedRoute: ActivatedRoute,\n    private service: PokemonService,\n    private storage: WebstorageService\n  ) { }\n\n  ngOnInit(): void {\n    this.type = this.activatedRoute.snapshot.params.type;\n\n    /**\n     * Subscribe in param url \"type\"\n     */\n    this.activatedRoute.paramMap.subscribe(params => {\n      this.type = params.get('type');\n      this.service.type = this.type;\n      return this.checkSubscriptions() || this.makeList();\n    });\n\n  }\n\n  checkSubscriptions(): boolean {\n    let newSubscription = false;\n    if(this.type === 'favorites' && !this.favoritesSubscription) {\n      /**\n       * get localStorage favorites and set pages\n       */\n      this.favoritesSubscription = this.storage.favorites.subscribe(favorites => {\n        const names = Object.values(favorites || {});\n        this.favorites = names.map(name => ({name, url: `${environment.api}/pokemon/${name}`}));\n        if (this.type === 'favorites') {\n          this.makeList();\n        }\n      });\n      newSubscription = true;\n    }\n    if(this.type !== 'favorites' && !this.typesSubscription) {\n      /**\n       * set this.types on update types in service\n       */\n      this.typesSubscription = this.service.types.subscribe(types => {\n        this.types = types;\n        this.makeList();\n      });\n      newSubscription = true;\n    }\n    return newSubscription;\n  }\n\n  makeList(): void {\n    (this.type === 'favorites') ? this.setPages(this.favorites) : this.getList();\n  }\n\n  /**\n   * Get type by name and define list with first 10 items\n   */\n  getList(): void {\n    if(!this.type || !this.types) return;\n    const type = this.types.find(t => t.name === this.type);\n    this.typeSelected = type || null;\n    if(!type) return;\n    this.setPages(type.pokemon.map(poke => poke.pokemon));\n  }\n\n  setPages(pokelist: NameUrl[]): void {\n    this.totalPokemons = pokelist.length;\n    this.page = new Page(pokelist);\n    this.pokemons.length = 0;\n    this.next();\n  }\n\n  /**\n   * Load +10 items on click in \"Learn More...\"\n   */\n  next(): void {\n    if(!this.page) return;\n    const pageList: NameUrl[] = this.page.next().value;\n    this.service.getList(pageList).subscribe(pokemons => {\n      this.pokemons = [...this.pokemons, ...pokemons];\n    });\n  }\n\n  ngOnDestroy(): void {\n    this.type = undefined;\n    this.favorites = [];\n    this.pokemons = [];\n    this.favoritesSubscription && this.favoritesSubscription.unsubscribe();\n    this.typesSubscription && this.typesSubscription.unsubscribe();\n  }\n\n}\n\n/**\n * Page iterator return 10 items for step\n */\nclass Page {\n  private pointer = 0;\n  private offset = 10;\n\n  constructor(public items: NameUrl[]) {\n  }\n\n  public next(): IteratorResult<NameUrl[]> {\n    if (this.pointer < this.items.length) {\n      const result = {\n        done: false,\n        value: this.items.slice(this.pointer, this.pointer + this.offset)\n      };\n      this.pointer += this.offset;\n      return result;\n    } else {\n      return {\n        done: true,\n        value: null\n      };\n    }\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1915,9 +2237,13 @@
                     {
                         "name": "service",
                         "type": "PokemonService"
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService"
                     }
                 ],
-                "line": 30,
+                "line": 38,
                 "jsdoctags": [
                     {
                         "name": "activatedRoute",
@@ -1932,16 +2258,24 @@
                         "tagName": {
                             "text": "param"
                         }
+                    },
+                    {
+                        "name": "storage",
+                        "type": "WebstorageService",
+                        "tagName": {
+                            "text": "param"
+                        }
                     }
                 ]
             },
             "implements": [
-                "OnInit"
+                "OnInit",
+                "OnDestroy"
             ]
         },
         {
             "name": "TypesMenuComponent",
-            "id": "component-TypesMenuComponent-ce79e579ed207f67f069b6de60c43f8c",
+            "id": "component-TypesMenuComponent-b735ad8b18068bf9d0db6d56f318229d",
             "file": "src/app/shared/types-menu/types-menu.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1951,20 +2285,36 @@
             "selector": "poke-types-menu",
             "styleUrls": [],
             "styles": [
-                "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  "
+                "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n      text-align: center;\n      line-height: 1.8em;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  "
             ],
-            "template": "<div class=\"header\"></div>\n<ul>\n  <li [ngClass]=\"{'selected': service.type === null}\">\n    <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n      <span class=\"circle dark\"></span>\n      <span class=\"label\">All</span>\n    </a>\n  </li>\n  <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n    <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n      <span class=\"circle\" [ngClass]=\"type.name\"></span>\n      <span class=\"label\">{{type.name | titlecase}}</span>\n    </a>\n  </li>\n</ul>\n",
+            "template": "    <div class=\"header\"></div>\n    <ul>\n      <li [ngClass]=\"{'selected': service.type === null}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n<!--          <span class=\"circle dark\"></span>-->\n          <span class=\"circle\"><fa-icon [icon]=\"faHome\"></fa-icon></span>\n          <span class=\"label\">All</span>\n        </a>\n      </li>\n      <li [ngClass]=\"{'selected': service.type === 'favorites'}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"type/favorites\">\n          <span class=\"circle\"><fa-icon [icon]=\"faHeart\"></fa-icon></span>\n          <span class=\"label\">Favorites</span>\n        </a>\n      </li>\n      <hr>\n      <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n          <span class=\"circle\" [ngClass]=\"type.name\"></span>\n          <span class=\"label\">{{type.name | titlecase}}</span>\n        </a>\n      </li>\n    </ul>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "faHeart",
+                    "defaultValue": "faHeart",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 80
+                },
+                {
+                    "name": "faHome",
+                    "defaultValue": "faHome",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 79
+                },
+                {
                     "name": "service",
                     "type": "PokemonService",
                     "optional": false,
                     "description": "",
-                    "line": 74,
+                    "line": 82,
                     "modifierKind": [
                         114
                     ]
@@ -1975,14 +2325,14 @@
                     "type": "literal type",
                     "optional": false,
                     "description": "",
-                    "line": 72
+                    "line": 78
                 },
                 {
                     "name": "types",
                     "type": "Type[]",
                     "optional": false,
                     "description": "",
-                    "line": 71
+                    "line": 77
                 }
             ],
             "methodsClass": [
@@ -1992,7 +2342,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 76
+                    "line": 84
                 }
             ],
             "hostBindings": [],
@@ -2000,10 +2350,10 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../../services/pokemon.service';\nimport {Type} from '../model/pokemon';\nimport {ActivatedRoute} from '@angular/router';\n\n@Component({\n  selector: 'poke-types-menu',\n  template: `\n    <div class=\"header\"></div>\n    <ul>\n      <li [ngClass]=\"{'selected': service.type === null}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n          <span class=\"circle dark\"></span>\n          <span class=\"label\">All</span>\n        </a>\n      </li>\n      <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n          <span class=\"circle\" [ngClass]=\"type.name\"></span>\n          <span class=\"label\">{{type.name | titlecase}}</span>\n        </a>\n      </li>\n    </ul>\n  `,\n  styles: [`\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  `]\n})\nexport class TypesMenuComponent implements OnInit {\n  types: Type[];\n  typeByName: {[key: string]: Type} = {};\n\n  constructor(public service: PokemonService, private activatedRoute: ActivatedRoute) { }\n\n  ngOnInit(): void {\n    this.service.getTypes().subscribe(types => {\n      this.types = types;\n      this.types.forEach(type => this.typeByName[type.name] = type);\n    });\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport {PokemonService} from '../../services/pokemon.service';\nimport {Type} from '../model/pokemon';\nimport {ActivatedRoute} from '@angular/router';\nimport {faHome, faHeart} from '@fortawesome/free-solid-svg-icons';\n\n@Component({\n  selector: 'poke-types-menu',\n  template: `\n    <div class=\"header\"></div>\n    <ul>\n      <li [ngClass]=\"{'selected': service.type === null}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"list\">\n<!--          <span class=\"circle dark\"></span>-->\n          <span class=\"circle\"><fa-icon [icon]=\"faHome\"></fa-icon></span>\n          <span class=\"label\">All</span>\n        </a>\n      </li>\n      <li [ngClass]=\"{'selected': service.type === 'favorites'}\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" routerLink=\"type/favorites\">\n          <span class=\"circle\"><fa-icon [icon]=\"faHeart\"></fa-icon></span>\n          <span class=\"label\">Favorites</span>\n        </a>\n      </li>\n      <hr>\n      <li *ngFor=\"let type of types\" [ngClass]=\"{'selected': type.name === service.type}\" [hidden]=\"typeByName && !typeByName[type.name]?.pokemon?.length\">\n        <a class=\"btn btn-light mt-1 mb-1 pl-md-5\" [routerLink]=\"['type', type.name]\">\n          <span class=\"circle\" [ngClass]=\"type.name\"></span>\n          <span class=\"label\">{{type.name | titlecase}}</span>\n        </a>\n      </li>\n    </ul>\n  `,\n  styles: [`\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n      text-align: center;\n      line-height: 1.8em;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  `]\n})\nexport class TypesMenuComponent implements OnInit {\n  types: Type[];\n  typeByName: {[key: string]: Type} = {};\n  faHome = faHome;\n  faHeart = faHeart;\n\n  constructor(public service: PokemonService, private activatedRoute: ActivatedRoute) { }\n\n  ngOnInit(): void {\n    this.service.getTypes().subscribe(types => {\n      this.types = types;\n      this.types.forEach(type => this.typeByName[type.name] = type);\n    });\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n    }\n    .spc {\n      width: 1.6em;\n      height: 1.6em;\n      display: inline-block;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  \n",
+            "stylesData": "\n    ul {\n      padding: 0;\n      margin: 0;\n      overflow: auto;\n      height: calc(100% - 70px);\n    }\n    li {\n      list-style: none;\n    }\n    li.selected a {\n      background-color: #e2e6ea;\n      border-color: #dae0e5;\n    }\n    a {\n      color: inherit;\n      display: block;\n      position: relative;\n      overflow: hidden;\n      padding: 0 1em 0 1em;\n      line-height: 2.6em;\n      text-align: left;\n    }\n    a:hover {\n      color: inherit;\n    }\n    .circle {\n      width: 1.6em;\n      height: 1.6em;\n      border-radius: 1em;\n      position: absolute;\n      top: 0.5em;\n      left: 0.5em;\n      text-align: center;\n      line-height: 1.8em;\n    }\n    .label {\n      position: relative;\n      z-index: 2;\n    }\n  \n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -2017,7 +2367,7 @@
                         "type": "ActivatedRoute"
                     }
                 ],
-                "line": 72,
+                "line": 80,
                 "jsdoctags": [
                     {
                         "name": "service",
@@ -2331,6 +2681,14 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Card.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  onFavorite: action('favorite'),\n}"
+            },
+            {
                 "name": "context",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2343,8 +2701,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
+                "type": "Story<CardComponent>",
+                "defaultValue": "() => ({\n  component: CardComponent,\n  props: {\n    pokemon: pokemonNormalize(mockPokemon()),\n    onFavorite: actionsData.onFavorite\n  }\n})"
             },
             {
                 "name": "Default",
@@ -2376,7 +2734,7 @@
                 "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true,\n  api: `http://pokeapi.co/api/v2`\n}"
+                "defaultValue": "{\n  production: true,\n  api: 'https://pokeapi.co/api/v2'\n}"
             },
             {
                 "name": "environment",
@@ -2384,7 +2742,7 @@
                 "subtype": "variable",
                 "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  api: `http://pokeapi.co/api/v2`\n}"
+                "defaultValue": "{\n  production: false,\n  api: 'https://pokeapi.co/api/v2'\n}"
             },
             {
                 "name": "pokemonNormalize",
@@ -2402,12 +2760,20 @@
                 "type": "literal type"
             },
             {
-                "name": "Template",
+                "name": "STORAGE_FAVORITES",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Card.stories.ts",
-                "type": "Story<CardComponent>",
-                "defaultValue": "(args: CardComponent) => ({\n  component: CardComponent,\n  props: args,\n})"
+                "file": "src/app/services/webstorage.service.ts",
+                "type": "string",
+                "defaultValue": "'favorites'"
+            },
+            {
+                "name": "STORAGE_OPTIONS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/services/webstorage.service.ts",
+                "type": "string",
+                "defaultValue": "'options'"
             },
             {
                 "name": "Template",
@@ -2445,9 +2811,46 @@
                 "returnType": "PokemonData"
             }
         ],
-        "typealiases": [],
+        "typealiases": [
+            {
+                "name": "Favorites",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/services/webstorage.service.ts",
+                "description": "",
+                "kind": 165
+            },
+            {
+                "name": "Options",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/services/webstorage.service.ts",
+                "description": "",
+                "kind": 165
+            }
+        ],
         "enumerations": [],
         "groupedVariables": {
+            "src/stories/Card.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Card.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  onFavorite: action('favorite'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Card.stories.ts",
+                    "type": "Story<CardComponent>",
+                    "defaultValue": "() => ({\n  component: CardComponent,\n  props: {\n    pokemon: pokemonNormalize(mockPokemon()),\n    onFavorite: actionsData.onFavorite\n  }\n})"
+                }
+            ],
             "src/test.ts": [
                 {
                     "name": "context",
@@ -2463,24 +2866,6 @@
                     "subtype": "variable",
                     "file": "src/test.ts",
                     "type": "literal type"
-                }
-            ],
-            "src/stories/Card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Card.stories.ts",
-                    "type": "Story<CardComponent>",
-                    "defaultValue": "(args: CardComponent) => ({\n  component: CardComponent,\n  props: args,\n})"
                 }
             ],
             "src/stories/Row.stories.ts": [
@@ -2544,7 +2929,7 @@
                     "subtype": "variable",
                     "file": "src/environments/environment.prod.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: true,\n  api: `http://pokeapi.co/api/v2`\n}"
+                    "defaultValue": "{\n  production: true,\n  api: 'https://pokeapi.co/api/v2'\n}"
                 }
             ],
             "src/environments/environment.ts": [
@@ -2554,7 +2939,7 @@
                     "subtype": "variable",
                     "file": "src/environments/environment.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: false,\n  api: `http://pokeapi.co/api/v2`\n}"
+                    "defaultValue": "{\n  production: false,\n  api: 'https://pokeapi.co/api/v2'\n}"
                 }
             ],
             "src/app/shared/model/pokemon.normalize.ts": [
@@ -2565,6 +2950,24 @@
                     "file": "src/app/shared/model/pokemon.normalize.ts",
                     "type": "",
                     "defaultValue": "(data): Pokemon => {\n\n  const normalize = {\n    set(obj, prop, value): boolean {\n      const accept = ['id', 'name', 'height', 'order', 'sprites', 'stats', 'types', 'weight', 'img'];\n      if (!accept.includes(prop)) {\n        return true;\n      }\n\n      if (prop === 'sprites') {\n        value = (value as Sprites).other.dream_world.front_default;\n        obj.img = value;\n        return true;\n      }\n      if (prop === 'types') {\n        value = (value as TypeSlot[]).map(type => type.type.name);\n      }\n      if (prop === 'stats') {\n        value = (value as StatInfo[]).map(stat => {\n          const { base_stat, stat:{ name } } = stat;\n          return { name, value: base_stat };\n        });\n      }\n\n      obj[prop] = value;\n      return true;\n    }\n  };\n\n  const proxy = new Proxy<Pokemon>({}, normalize);\n  const normalized = Object.assign(proxy, data || {});\n  return Object.assign({}, normalized);\n}"
+                }
+            ],
+            "src/app/services/webstorage.service.ts": [
+                {
+                    "name": "STORAGE_FAVORITES",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/services/webstorage.service.ts",
+                    "type": "string",
+                    "defaultValue": "'favorites'"
+                },
+                {
+                    "name": "STORAGE_OPTIONS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/services/webstorage.service.ts",
+                    "type": "string",
+                    "defaultValue": "'options'"
                 }
             ]
         },
@@ -2582,7 +2985,28 @@
             ]
         },
         "groupedEnumerations": {},
-        "groupedTypeAliases": {}
+        "groupedTypeAliases": {
+            "src/app/services/webstorage.service.ts": [
+                {
+                    "name": "Favorites",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/services/webstorage.service.ts",
+                    "description": "",
+                    "kind": 165
+                },
+                {
+                    "name": "Options",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/services/webstorage.service.ts",
+                    "description": "",
+                    "kind": 165
+                }
+            ]
+        }
     },
     "routes": {
         "name": "<root>",
@@ -2693,6 +3117,35 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/services/webstorage.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "WebstorageService",
+                "coveragePercent": 25,
+                "coverageCount": "2/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/services/webstorage.service.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "STORAGE_FAVORITES",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/services/webstorage.service.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "STORAGE_OPTIONS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/settings.ts",
                 "type": "class",
                 "linktype": "classe",
@@ -2706,8 +3159,8 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "CardComponent",
-                "coveragePercent": 14,
-                "coverageCount": "1/7",
+                "coveragePercent": 10,
+                "coverageCount": "1/10",
                 "status": "low"
             },
             {
@@ -2861,7 +3314,7 @@
                 "linktype": "component",
                 "name": "PaginatorComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/11",
                 "status": "low"
             },
             {
@@ -2915,7 +3368,7 @@
                 "linktype": "component",
                 "name": "TypesMenuComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
@@ -2923,8 +3376,8 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "TypeComponent",
-                "coveragePercent": 20,
-                "coverageCount": "2/10",
+                "coveragePercent": 11,
+                "coverageCount": "2/18",
                 "status": "low"
             },
             {
@@ -2961,7 +3414,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Default",
+                "name": "actionsData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -2971,7 +3424,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

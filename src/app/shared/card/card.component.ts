@@ -23,7 +23,7 @@ import {WebstorageService} from '../../services/webstorage.service';
         <div>
           <span [hidden]="!pokemon.height" class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faRulerVertical"></fa-icon>
-            {{pokemon.height}}m</span>
+            {{(pokemon.height || 0) / 10}}m</span>
           <span [hidden]="!pokemon.weight" class="alert alert-secondary d-inline-block m-1 pt-0 pb-0">
             <fa-icon [icon]="faWeight"></fa-icon>
             {{pokemon.weight}} kg</span>

@@ -11,7 +11,6 @@ import {faHome, faHeart} from '@fortawesome/free-solid-svg-icons';
     <ul>
       <li [ngClass]="{'selected': service.type === null}">
         <a class="btn btn-light mt-1 mb-1 pl-md-5" routerLink="list">
-<!--          <span class="circle dark"></span>-->
           <span class="circle"><fa-icon [icon]="faHome"></fa-icon></span>
           <span class="label">All</span>
         </a>
@@ -50,7 +49,7 @@ import {faHome, faHeart} from '@fortawesome/free-solid-svg-icons';
       display: block;
       position: relative;
       overflow: hidden;
-      padding: 0 1em 0 1em;
+      padding: 0 0 0 2.3em;
       line-height: 2.6em;
       text-align: left;
     }

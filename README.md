@@ -1,6 +1,9 @@
 # Pokemon
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+Esse projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 10.1.3.
+
+Está publicado em:
+https://ps-pokedex.herokuapp.com/
 
 ## Development server
 
